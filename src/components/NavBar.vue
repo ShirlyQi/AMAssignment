@@ -17,7 +17,7 @@
   <li><router-link to="/home" class="nav-item">HOME</router-link></li>
   <li><router-link to="/about" class="nav-item">ABOUT MALAYSIA</router-link></li>
   <li><router-link to="/states" class="nav-item">STATE IN MALAYSIA</router-link></li>
-  <li><router-link to="/profile" class="nav-item">PROFILE</router-link></li>
+  <li><router-link to="/profile/me" class="nav-item">PROFILE</router-link></li>
 </ul>
 
     </div>

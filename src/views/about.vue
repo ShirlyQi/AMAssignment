@@ -11,7 +11,7 @@ import heroImg from '../assets/hero.jpg'
 import geoImg from '../assets/geography.jpg'
 import climateImg from '../assets/climate.jpg'
 import historyImg from '../assets/history.jpg'
-import cultureImg from '../assets/culture.jpg'
+import cultureImg from '../assets/culture_2.jpg'
 
 const placeholder = '/images/placeholder.jpg'
 </script>
