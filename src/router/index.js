@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
-import Home from '../views/Home.vue'
+import Web from '../views/Web.vue'
 import Login from '../views/Login.vue'
 import SignUp from '../views/SignUp.vue'
-import Dashboard from '../views/Dashboard.vue'
+import Home from '../views/Home.vue'
 import ForgotPassword from '../views/ForgotPassword.vue'
 import Profile from '../views/Profile.vue'
 import About from '../views/about.vue'
@@ -25,10 +25,10 @@ import Terengganu from '../views/place/terengganu.vue'
 
 
 const routes = [
-  { path: '/', component: Home },
+  { path: '/', component: Web },
   { path: '/login', component: Login },
   { path: '/signup', component: SignUp },
-  { path: '/dashboard', component: Dashboard },
+  { path: '/home', component: Home },
   { path: '/forgot-password', component: ForgotPassword},
   { path: '/profile', name: 'Profile', component: Profile },
   { path: '/about', name: 'About', component: About },

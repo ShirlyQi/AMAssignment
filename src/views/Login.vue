@@ -21,7 +21,7 @@ function login() {
   }
 
   // 模拟登录成功
-  router.push('/dashboard')
+  router.push('/home')
 }
 </script>
 

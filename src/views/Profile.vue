@@ -1,6 +1,7 @@
 <script setup>
 import { useRouter } from 'vue-router'
 import { ref, onMounted } from 'vue'
+import kltower from '../assets/kltower.jpeg'
 
 const router = useRouter()
 const profile = ref({
@@ -23,8 +24,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="h-screen flex items-center justify-center bg-gray-50">
-    <div class="w-96 bg-white p-8 rounded shadow-lg">
+  <div class="h-screen flex items-center justify-center relative">
+    <!-- 背景圖 + 模糊 -->
+    <div
+      class="absolute inset-0 bg-cover bg-center filter blur-sm opacity-60"
+      :style="{ backgroundImage: `url(${kltower})` }"
+    ></div>
+
+    <!-- 白色內容卡片 -->
+    <div class="relative w-96 bg-white p-8 rounded shadow-lg z-10">
       <h2 class="text-2xl font-bold mb-6 text-center">Profile</h2>
 
       <!-- Profile Picture -->
