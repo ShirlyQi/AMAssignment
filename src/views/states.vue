@@ -14,6 +14,9 @@ import johorImg from '../assets/johor.jpg'
 import terengganuImg from '../assets/terengganu.jpg'
 import kelantanImg from '../assets/kelantan.jpg'
 import nsImg from '../assets/ns.jpg'
+import penangImg from '../assets/penang_2.jpg'
+import melakaImg from '../assets/melaka_2.jpg'
+
 
 // social media icons
 import facebook from '../assets/fb.png'
@@ -132,7 +135,28 @@ import instagram from '../assets/ig.png'
     <p>NEGERI SEMBILAN</p>
   </div>
 </router-link>
+<router-link to="/penang" class="nav-item block text-center">
+  <div>
+    <img
+      :src="penangImg"
+      class="w-24 h-24 rounded-full mx-auto cursor-pointer"
+    />
+    <p>Penang</p>
+  </div>
+</router-link>
+<router-link to="/melaka" class="nav-item block text-center">
+  <div>
+    <img
+      :src="melakaImg"
+      class="w-24 h-24 rounded-full mx-auto cursor-pointer"
+    />
+    <p>MELAKA</p>
+  </div>
+</router-link>
+
       </div>
+      
+      
     </section>
 
     <FooterBar />

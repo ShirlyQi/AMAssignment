@@ -6,6 +6,9 @@ import seaVillage from '/src/assets/sabah-sea.jpg'
 import kinabaluPeak from '/src/assets/sabah-peak.jpg'
 import kinabaluView from '/src/assets/sabah-mountain.jpg'
 import sabahCulture from '/src/assets/sabah-culture.jpg'
+
+import facebook from '/src/assets/fb.png'
+import instagram from '/src/assets/ig.png'
 </script>
 
 <template>
@@ -17,7 +20,7 @@ import sabahCulture from '/src/assets/sabah-culture.jpg'
     <main class="flex-grow px-6 py-14 bg-gray-50">
       <h1 class="text-4xl font-extrabold text-center mb-8">SABAH</h1>
 
-      <p class="text-center max-w-4xl mx-auto mb-12 leading-relaxed text-gray-700">
+      <p class="text-center text-lg max-w-4xl mx-auto mb-12 leading-relaxed text-gray-700">
         Sabah is a state in Malaysia located on the northern part of Borneo island,
         known for its stunning natural diversity and biodiversity hotspots.
         It features attractions like Mount Kinabalu, Southeast Asia's highest peak,
@@ -57,9 +60,16 @@ import sabahCulture from '/src/assets/sabah-culture.jpg'
 
     <!-- 页脚 -->
     <FooterBar />
+
+    <!-- 左侧社交图标 -->
+    <div class="fixed top-1/2 left-4 transform -translate-y-1/2 flex flex-col space-y-2 z-50 opacity-70">
+      <a href="https://www.facebook.com/share/1BuieJf2kt/">
+        <img :src="facebook" alt="Facebook" class="w-12 h-12"/>
+      </a>
+      <a href="https://www.instagram.com/visitmalaysiaofficial?igsh=MWt3NGMzeTN5N255eg==">
+        <img :src="instagram" alt="Instagram" class="w-12 h-12"/>
+      </a>
+    </div>
+
   </div>
 </template>
-
-<style scoped>
-/* 可根据需要微调 */
-</style>

@@ -21,6 +21,7 @@ import Perlis from '../views/place/perlis.vue'
 import Sarawak from '../views/place/sarawak.vue'
 import Selangor from '../views/place/selangor.vue'
 import Terengganu from '../views/place/terengganu.vue'
+import Perak from '../views/place/perak.vue'
 
 
 const routes = [
@@ -44,7 +45,8 @@ const routes = [
   { path: '/perlis', name: 'Perlis', component: Perlis },
   { path: '/sarawak', name: 'Sarawak', component: Sarawak },
   { path: '/selangor', name: 'Selangor', component: Selangor },
-  { path: '/terengganu', name:'Terengganu' ,component : Terengganu }
+  { path: '/terengganu', name:'Terengganu' ,component : Terengganu },
+  { path: '/perak', name: 'Perak',component: Perak },
 ]
 
 const router = createRouter({
