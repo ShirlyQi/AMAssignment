@@ -19,7 +19,7 @@ import klFood from '/src/assets/kl-food.jpg'
     <h1 class="text-5xl font-extrabold mb-10">KUALA LUMPUR</h1>
 
     <div class="grid md:grid-cols-3 gap-6 items-stretch">
-  <!-- 第一张图（高度 = 右边全部） -->
+  
   <div class="md:col-span-2 overflow-hidden rounded-xl">
     <img
       :src="kltower"
@@ -28,7 +28,7 @@ import klFood from '/src/assets/kl-food.jpg'
     />
   </div>
 
-  <!-- 右边：文字 + 第二张图 -->
+
   <div class="flex flex-col space-y-4 h-full">
     <p class="leading-relaxed text-lg">
       Kuala Lumpur, commonly known as KL, is Malaysia's capital and a bustling
@@ -49,7 +49,7 @@ import klFood from '/src/assets/kl-food.jpg'
     />
   </div>
 
-  <!-- 第二张图 -->
+ 
   <div class="overflow-hidden rounded-xl pt-10">
     <img
       :src="klStreet"
@@ -69,7 +69,7 @@ import klFood from '/src/assets/kl-food.jpg'
 
     <FooterBar />
 
-    <!-- 左侧社交图标 -->
+ 
     <div class="fixed top-1/2 left-4 transform -translate-y-1/2 flex flex-col space-y-2 z-50 opacity-70">
       <a href="https://www.facebook.com/share/1BuieJf2kt/">
         <img :src="facebook" alt="Facebook" class="w-12 h-12"/>

@@ -7,104 +7,6 @@
     <div class="calculator-container">
       
 
-      <!-- 费用计算表格 -->
-      <!-- <div class="calculation-tables"> -->
-        <!-- 左边：基于总人数的费用 -->
-        <!-- <div class="table-section">
-          <h2>ACTIVITY THAT CAN PLAY (PER PAX)</h2>
-          <div class="table-container">
-            <table class="pricing-table">
-              <thead>
-                <tr>
-                  <th>ITEM</th>
-                  <th>PER PAX</th>
-                  <th>TOTAL</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>ENTERTAINMENT ACTIVITIES</td>
-                  <td>RM 550</td>
-                  <td>RM {{ calculateTotal('entertainment') }}</td>
-                </tr>
-                <tr>
-                  <td>
-                    HOSTEL ACCOMMODATION
-                    <div class="room-info">{{ getRoomDescription() }}</div>
-                  </td>
-                  <td>RM {{ calculatePerPax('hostel') }}</td>
-                  <td>RM {{ calculateTotal('hostel') }}</td>
-                </tr>
-                <tr>
-                  <td>FOOD & BEVERAGE</td>
-                  <td>RM 250</td>
-                  <td>RM {{ calculateTotal('f&b') }}</td>
-                </tr>
-                <tr class="total-row">
-                  <td><strong>TOTAL COST</strong></td>
-                  <td><strong>RM {{ calculateAveragePerPax() }}</strong></td>
-                  <td><strong>RM {{ calculateGrandTotal() }}</strong></td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div> -->
-
-        <!-- 右边：单人费用预估 -->
-        <!-- <div class="table-section">
-          <h2>ESTIMATED COST PER PERSON</h2>
-          <div class="table-container">
-            <table class="estimation-table">
-              <thead>
-                <tr>
-                  <th>CATEGORY</th>
-                  <th>COST (PER PAX)</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>
-                    <div class="category-header">
-                      <span class="category-title">ENTERTAINMENT ACTIVITIES</span>
-                      <span class="category-desc">Snorkeling, Island Hopping, Jungle Trekking</span>
-                    </div>
-                  </td>
-                  <td class="price-cell">RM 550</td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="category-header">
-                      <span class="category-title">ACCOMMODATION</span>
-                      <span class="category-desc">{{ getRoomDescription(true) }}</span>
-                    </div>
-                  </td>
-                  <td class="price-cell">RM {{ calculatePerPax('hostel') }}</td>
-                </tr>
-                <tr>
-                  <td>
-                    <div class="category-header">
-                      <span class="category-title">FOOD & BEVERAGE</span>
-                      <span class="category-desc">Breakfast, Lunch, Dinner, Snacks</span>
-                    </div>
-                  </td>
-                  <td class="price-cell">RM 250</td>
-                </tr>
-                <tr class="total-estimate">
-                  <td>
-                    <div class="category-header">
-                      <span class="category-title">TOTAL PER PERSON</span>
-                      <span class="category-desc">3 Days 2 Nights Package</span>
-                    </div>
-                  </td>
-                  <td class="total-price">RM {{ calculateAveragePerPax() }}</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div> -->
-
-      <!-- attraction details -->
       <div class="breakdown-section !bg-gray-100">
         <h3>ATTRACTIONS DETAILS</h3>
 
@@ -140,7 +42,6 @@
       </div>
 
 
-      <!-- 人数输入区域 -->
       <div class="input-section">
         <div class="input-group">
           <label for="personCount">NUMBER OF PEOPLE (PAX):</label>
@@ -159,7 +60,6 @@
         </div>
       </div>
 
-      <!-- 房间分配可视化 -->
       <div class="room-allocation">
         <h3>Total Price</h3>
 

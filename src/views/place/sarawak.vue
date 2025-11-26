@@ -37,10 +37,9 @@ import instagram from '/src/assets/ig.png'
     </div>
   </section>
 
-  <!-- Footer -->
     <FooterBar />
 
-    <!-- 左侧社交图标 -->
+   
     <div class="fixed top-1/2 left-4 transform -translate-y-1/2 flex flex-col space-y-2 z-50 opacity-70">
       <a href="https://www.facebook.com/share/1BuieJf2kt/">
         <img :src="facebook" alt="Facebook" class="w-12 h-12"/>

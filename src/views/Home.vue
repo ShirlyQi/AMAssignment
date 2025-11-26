@@ -84,19 +84,19 @@ import instagram from '../assets/ig.png'
     </div>
 
 <div class="flex justify-center items-center w-full max-w-5xl mx-auto gap-6">
-    <!-- 左列 -->
+  
     <div class="flex flex-col justify-center gap-6">
       <img :src="cultureImg" class="rounded-2xl aspect-square object-cover" />
       <img :src="natureImg" class="rounded-2xl aspect-square object-cover" />
     </div>
 
-    <!-- 中间大图 -->
+   
     <img
       :src="foodImg"
       class="rounded-2xl aspect-square object-cover"
     />
 
-    <!-- 右列 -->
+   
     <div class="flex flex-col justify-center gap-6">
       <img :src="cityImg" class="rounded-2xl aspect-square object-cover" />
       <img :src="islandImg" class="rounded-2xl aspect-square object-cover" />

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import kltower from '../assets/kltower.jpeg' // 背景图
+import kltower from '../assets/kltower.jpeg' 
 import logo from '../assets/logo.png'        // Logo
 
 const router = useRouter()
@@ -28,13 +28,13 @@ function backToLogin() {
 
 <template>
   <div class="h-screen flex items-center justify-center relative">
-    <!-- 背景图 + 模糊 -->
+
     <div
       class="absolute inset-0 bg-cover bg-center filter blur-sm"
       :style="{ backgroundImage: `url(${kltower})` }"
     ></div>
 
-    <!-- 白色内容卡片 -->
+    
     <div class="relative w-96 bg-white p-8 rounded shadow-lg">
       <!-- Logo -->
       <img :src="logo" class="w-60 mx-auto mb-6" alt="Logo" />
@@ -56,13 +56,13 @@ function backToLogin() {
         </div>
       </div>
 
-      <!-- 资料 -->
+   
       <p class="mb-2"><strong>Full Name:</strong> {{ profile.name }}</p>
       <p class="mb-2"><strong>Email:</strong> {{ profile.email }}</p>
       <p class="mb-2"><strong>Phone:</strong> {{ profile.phone }}</p>
       <p class="mb-4"><strong>Address:</strong> {{ profile.address }}</p>
 
-      <!-- 返回 Login -->
+     
       <button
         class="w-full bg-amber-700 text-white py-2 rounded hover:bg-amber-800 transition"
         @click="backToLogin"

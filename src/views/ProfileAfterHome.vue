@@ -11,7 +11,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-// Profile 数据
+
 const profile = ref({
   name: 'Qi',
   email: 'qi@email.com',
@@ -20,24 +20,24 @@ const profile = ref({
   profilePicture: null
 })
 
-// 是否处于编辑状态
+
 const isEditing = ref(false)
 
-// 头像预览
+
 const previewImage = ref(profile.value.profilePicture)
 
-// 编辑按钮
+
 function editProfile() {
   isEditing.value = true
 }
 
-// 保存按钮
+
 function saveProfile() {
   profile.value.profilePicture = previewImage.value
   isEditing.value = false
 }
 
-// 上传头像
+
 function handleFileUpload(event) {
   const file = event.target.files[0]
   if (file) {
@@ -49,7 +49,7 @@ function handleFileUpload(event) {
   }
 }
 
-// 退出登录
+
 function logout() {
   router.push('/login')
 }
@@ -59,12 +59,12 @@ function logout() {
   <div class="bg-gray-50 min-h-screen flex flex-col relative">
     <NavBar />
 
-    <!-- 主内容 -->
+    
     <section class="flex-1 pt-20 pb-15 px-10">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
-        <!-- 左侧：头像 + 按钮 -->
+      
         <div class="bg-white rounded-2xl shadow p-8 text-center">
-          <!-- 编辑头像 -->
+   
           <div v-if="isEditing" class="mx-auto w-32 h-32 relative">
             <label class="cursor-pointer w-32 h-32 rounded-full overflow-hidden bg-gray-200 flex items-center justify-center border border-dashed border-gray-300">
               <input type="file" class="hidden" accept="image/*" @change="handleFileUpload" />
@@ -73,13 +73,12 @@ function logout() {
             </label>
           </div>
 
-          <!-- 非编辑头像 -->
           <img v-else-if="profile.profilePicture" :src="profile.profilePicture" class="w-32 h-32 rounded-full mx-auto object-cover border" />
           <div v-else class="w-32 h-32 rounded-full bg-gray-200 mx-auto flex items-center justify-center text-gray-400">
             No Image
           </div>
 
-          <!-- 编辑/显示区域 -->
+         
           <div class="mt-6">
             <div v-if="isEditing" class="space-y-2">
               <input v-model="profile.name" placeholder="Full Name" class="w-full border p-2 rounded focus:ring-2 focus:ring-amber-600" />
@@ -100,7 +99,7 @@ function logout() {
           </div>
         </div>
 
-        <!-- 右侧：个人信息 -->
+        
         <div class="md:col-span-2 bg-white rounded-2xl shadow p-10">
           <h2 class="text-2xl font-bold mb-8">Personal Information</h2>
           <div class="space-y-6">
@@ -132,7 +131,7 @@ function logout() {
     <!-- Footer -->
     <FooterBar />
 
-    <!-- 左侧社交图标 -->
+   
     <div class="fixed top-1/2 left-4 transform -translate-y-1/2 flex flex-col space-y-2 z-50 opacity-70">
       <a href="https://www.facebook.com/share/1BuieJf2kt/">
         <img :src="facebook" alt="Facebook" class="w-12 h-12"/>

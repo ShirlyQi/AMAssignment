@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
   }
 });
 
-// 保存前加密密码
+
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   const salt = await bcrypt.genSalt(10);

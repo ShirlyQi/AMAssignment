@@ -32,7 +32,7 @@ function handleFileUpload(event) {
   }
 }
 
-// 注册成功 → Home 前 Profile
+
 function signUp() {
   error.value = ''
 
@@ -60,7 +60,7 @@ function signUp() {
 </script>
 
 <template>
-  <!-- 保留你原本的 SignUp UI -->
+
   <div class="h-screen flex items-center justify-center relative">
     <div class="absolute inset-0 bg-cover bg-center filter blur-sm" :style="{ backgroundImage: `url(${kltower})` }"></div>
 
@@ -80,7 +80,7 @@ function signUp() {
         <span class="text-xs text-gray-500 mt-1">Profile Picture (optional)</span>
       </div>
 
-      <!-- 表单字段 -->
+      
       <input v-model="name" type="text" placeholder="Full Name" class="w-full border p-2 mb-3 rounded"/>
       <input v-model="email" type="email" placeholder="Email" class="w-full border p-2 mb-3 rounded"/>
       

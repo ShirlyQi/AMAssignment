@@ -5,7 +5,7 @@ const cors = require("cors")
 
 const app = express()
 
-// 中间件配置
+
 app.use(cors({
   origin: "http://localhost:5173", // Vue开发服务器地址
   credentials: true,
@@ -16,11 +16,9 @@ app.use(cors({
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-// 路由
 app.use("/api/auth", require("./routes/auth"))
 app.use("/api", require("./routes/admin"))
 
-// 测试数据库连接
 app.get("/api/test-db", async (req, res) => {
   try {
     const db = require("./config/db")
@@ -40,7 +38,7 @@ app.get("/api/test-db", async (req, res) => {
   }
 })
 
-// 健康检查
+
 app.get("/api/health", (req, res) => {
   res.json({
     status: "OK",
@@ -50,7 +48,7 @@ app.get("/api/health", (req, res) => {
   })
 })
 
-// 主页
+
 app.get("/", (req, res) => {
   res.json({
     message: "Visit Malaysia 2026 Backend API",
@@ -68,7 +66,7 @@ app.get("/", (req, res) => {
   })
 })
 
-// 404处理 - FIXED: Remove the "*" parameter
+
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -76,7 +74,7 @@ app.use((req, res) => {
   })
 })
 
-// 错误处理中间件
+
 app.use((err, req, res, next) => {
   console.error("Server Error:", {
     message: err.message,
@@ -85,7 +83,7 @@ app.use((err, req, res, next) => {
     method: req.method
   })
 
-  // JWT认证错误
+ 
   if (err.name === "JsonWebTokenError") {
     return res.status(401).json({
       success: false,
@@ -100,7 +98,6 @@ app.use((err, req, res, next) => {
     })
   }
 
-  // 通用错误响应
   res.status(err.status || 500).json({
     success: false,
     message: err.message || "Internal server error",
@@ -108,7 +105,7 @@ app.use((err, req, res, next) => {
   })
 })
 
-// 启动服务器
+
 const PORT = process.env.PORT || 5000
 const HOST = process.env.HOST || "localhost"
 

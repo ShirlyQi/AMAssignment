@@ -4,23 +4,22 @@ const jwt = require("jsonwebtoken")
 const db = require("../config/db")
 const router = express.Router()
 
-// 验证邮箱格式的辅助函数
+
 const validateEmail = (email) => {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
   return re.test(email)
 }
 
-// 验证密码强度的辅助函数
 const validatePassword = (password) => {
   return password.length >= 6
 }
 
-// 注册路由
+
 router.post("/register", async (req, res) => {
   const { name, email, password, phone, address } = req.body
 
   try {
-    // 验证输入
+
     if (!name || !email || !password) {
       return res.status(400).json({
         success: false,
@@ -42,7 +41,7 @@ router.post("/register", async (req, res) => {
       })
     }
 
-    // 检查邮箱是否已存在
+    
     const [existingUsers] = await db.query(
       "SELECT email FROM Member WHERE email = ?",
       [email]
@@ -55,10 +54,10 @@ router.post("/register", async (req, res) => {
       })
     }
 
-    // 哈希密码
+
     const hashedPassword = await bcrypt.hash(password, 10)
 
-    // 插入新用户
+ 
     const [result] = await db.query(
       `INSERT INTO Member 
        (name, email, password, phone, address, join_date, expiry_date, is_active) 
@@ -66,7 +65,7 @@ router.post("/register", async (req, res) => {
       [name, email, hashedPassword, phone || null, address || null]
     )
 
-    // 生成JWT令牌
+    
     const token = jwt.sign(
       {
         member_id: result.insertId,
@@ -108,12 +107,11 @@ router.post("/register", async (req, res) => {
   }
 })
 
-// 登录路由
+
 router.post("/login", async (req, res) => {
   const { email, password } = req.body
 
   try {
-    // 验证输入
     if (!email || !password) {
       return res.status(400).json({
         success: false,
@@ -121,7 +119,7 @@ router.post("/login", async (req, res) => {
       })
     }
 
-    // 查询用户
+  
     const [rows] = await db.query(
       `SELECT member_id, name, email, password, phone, address, 
               join_date, expiry_date, is_active 
@@ -139,7 +137,7 @@ router.post("/login", async (req, res) => {
 
     const user = rows[0]
 
-    // 检查账户状态
+   
     if (!user.is_active) {
       return res.status(403).json({
         success: false,
@@ -147,7 +145,6 @@ router.post("/login", async (req, res) => {
       })
     }
 
-    // 验证密码
     const isMatch = await bcrypt.compare(password, user.password)
     if (!isMatch) {
       return res.status(401).json({
@@ -156,7 +153,6 @@ router.post("/login", async (req, res) => {
       })
     }
 
-    // 生成JWT令牌
     const token = jwt.sign(
       {
         member_id: user.member_id,
@@ -167,7 +163,7 @@ router.post("/login", async (req, res) => {
       { expiresIn: "24h" }
     )
 
-    // 移除密码字段
+    
     const { password: _, ...userWithoutPassword } = user
 
     res.json({
@@ -186,7 +182,7 @@ router.post("/login", async (req, res) => {
   }
 })
 
-// 获取当前用户信息
+
 router.get("/me", async (req, res) => {
   try {
     const authHeader = req.headers.authorization
@@ -200,10 +196,8 @@ router.get("/me", async (req, res) => {
 
     const token = authHeader.split(" ")[1]
 
-    // 验证令牌
     const decoded = jwt.verify(token, process.env.JWT_SECRET)
 
-    // 查询用户信息
     const [rows] = await db.query(
       `SELECT member_id, name, email, phone, address, 
               join_date, expiry_date, is_active
@@ -247,7 +241,7 @@ router.get("/me", async (req, res) => {
   }
 })
 
-// 忘记密码
+
 router.post("/forgot-password", async (req, res) => {
   const { email } = req.body
 
@@ -259,14 +253,14 @@ router.post("/forgot-password", async (req, res) => {
       })
     }
 
-    // 检查用户是否存在
+    
     const [rows] = await db.query(
       "SELECT member_id, email, name FROM Member WHERE email = ?",
       [email]
     )
 
     if (rows.length === 0) {
-      // 为了安全，不透露用户是否存在
+   
       return res.json({
         success: true,
         message: "If your email is registered, you will receive password reset instructions."
@@ -287,7 +281,7 @@ router.post("/forgot-password", async (req, res) => {
   }
 })
 
-// 验证令牌（可选）
+
 router.post("/validate-token", (req, res) => {
   const { token } = req.body
 

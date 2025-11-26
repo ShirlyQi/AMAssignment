@@ -41,7 +41,7 @@
       </div>
 
 
-      <!-- 人数输入区域 -->
+     
       <div class="input-section">
         <div class="input-group">
           <label for="personCount">NUMBER OF PEOPLE (PAX):</label>
@@ -60,7 +60,7 @@
         </div>
       </div>
 
-      <!-- 房间分配可视化 -->
+
       <div class="room-allocation">
         <h3>Total Price</h3>
 

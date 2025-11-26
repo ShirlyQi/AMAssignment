@@ -47,7 +47,6 @@
       <p>Your Candy profile name will be dated. Since admin generals</p>
     </div>
 
-    <!-- 表单提交后的确认对话框 -->
     <div v-if="showConfirmation" class="confirmation-modal">
       <div class="modal-content">
         <div class="modal-header">
@@ -132,7 +131,7 @@ export default {
     
     
     async submitForm() {
-      // 保存提交的数据
+    
       this.formData.number_of_visitors = localStorage.getItem("number_visitors")
       this.formData.attraction = localStorage.getItem("attraction")
       this.formData.entry_fee = localStorage.getItem("entry_fee")
@@ -155,7 +154,7 @@ export default {
 
       this.submittedData = { ...this.formData };
 
-      // 在实际应用中，这里可以发送数据到服务器
+      
       console.log('Form submitted:', this.formData);
 
 
@@ -166,11 +165,11 @@ export default {
         console.error(`Error adding:`, error)
         alert(`Failed to add. Please try again.`)
       } finally {
-        // 显示确认对话框
+   
       this.showConfirmation = true;
       }
 
-      // 重置表单
+   
       this.formData = {
         member: '',
         attraction: '',
@@ -299,7 +298,7 @@ export default {
   border-radius: 4px;
 }
 
-/* 确认对话框样式 */
+
 .confirmation-modal {
   position: fixed;
   top: 0;
@@ -324,7 +323,7 @@ export default {
 }
 
 .modal-header h3 {
-  color: #00a8a8; /* 青色 */
+  color: #00a8a8; 
   margin-bottom: 30px;
   font-size: 22px;
   font-weight: bold;
@@ -395,7 +394,7 @@ export default {
   transform: translateY(1px);
 }
 
-/* 响应式设计 */
+
 @media (max-width: 600px) {
   .form-container {
     padding: 10px;
