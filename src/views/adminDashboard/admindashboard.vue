@@ -15,6 +15,151 @@ const showAddModal = ref(false)
 const currentFormData = ref({})
 const isLoading = ref(false)
 const formErrors = ref({})
+const showReportGenerator = ref(false)
+const selectedReport = ref('members-summary')
+const reportParams = ref({})
+const reportResults = ref(null)
+const reportLoading = ref(false)
+const availableCities = ref([])
+const availableTypes = ref([])
+
+/* =====================
+   Reports
+===================== */
+const reportConfigs = {
+  'members-summary': {
+    name: 'Members Summary',
+    description: 'Provide a summary of members, including number of members.',
+    endpoint: `${API_BASE_URL}/reports/members-summary`,
+    params: []
+  },
+  'reservations-by-employee': {
+    name: 'Reservations by Employee',
+    description: 'Show reservations by employee, with details of members and attractions handled.',
+    endpoint: `${API_BASE_URL}/reports/reservations-by-employee`,
+    params: []
+  },
+  'monthly-report': {
+    name: 'Monthly Report',
+    description: 'Generate a monthly report highlighting popular attractions and reservation counts.',
+    endpoint: `${API_BASE_URL}/reports/monthly-report`,
+    params: [
+      { key: 'month', label: 'Month (1-12)', type: 'number', min: 1, max: 12, default: new Date().getMonth() + 1 },
+      { key: 'year', label: 'Year', type: 'number', default: new Date().getFullYear() }
+    ]
+  },
+  'members-alphabetical': {
+    name: 'Members Alphabetical',
+    description: 'List all members, sorted alphabetically by last name.',
+    endpoint: `${API_BASE_URL}/reports/members-alphabetical`,
+    params: []
+  },
+    'attractions-by-filter': {
+    name: 'Attractions by Filter',
+    description: 'Retrieve attractions by city or category, sorted by name.',
+    endpoint: `${API_BASE_URL}/reports/attractions-by-filter`,
+    params: [
+      { 
+        key: 'city', 
+        label: 'City', 
+        type: 'select', 
+        options: [],
+        placeholder: 'Select city' 
+      },
+      { 
+        key: 'type', 
+        label: 'Type', 
+        type: 'select', 
+        options: [], 
+        placeholder: 'Select type' 
+      }
+    ]
+  },
+  'reservations-by-date-range': {
+    name: 'Reservations by Date Range',
+    description: 'Display reservations within a selected date range, including member and attraction details.',
+    endpoint: `${API_BASE_URL}/reports/reservations-by-date-range`,
+    params: [
+      { key: 'start_date', label: 'Start Date', type: 'date', required: true },
+      { key: 'end_date', label: 'End Date', type: 'date', required: true }
+    ]
+  },
+  'top-attractions': {
+    name: 'Top Attractions',
+    description: 'Identify the top N most reserved attractions and their locations.',
+    endpoint: `${API_BASE_URL}/reports/top-attractions`,
+    params: [
+      { key: 'limit', label: 'Number of Results (1-20)', type: 'number', min: 1, max: 20, default: 5 }
+    ]
+  },
+  'revenue-report': {
+    name: 'Revenue Report',
+    description: 'Calculate revenue from attraction reservations.',
+    endpoint: `${API_BASE_URL}/reports/revenue-report`,
+    params: [
+      { key: 'start_date', label: 'Start Date (Optional)', type: 'date' },
+      { key: 'end_date', label: 'End Date (Optional)', type: 'date' }
+    ]
+  }
+}
+
+const openReportsModal = async () => {
+  if (tab.value !== 'reports') {
+    tab.value = 'reports'
+    await fetchData()
+  }
+  showReportsModal.value = true
+  selectedReport.value = ''
+  reportResults.value = null
+  
+  // Get city and type options
+  try {
+    const [citiesRes, typesRes] = await Promise.all([
+      axios.get(`${API_BASE_URL}/attractions`),
+      axios.get(`${API_BASE_URL}/attractions`)
+    ])
+    
+    availableCities.value = [...new Set(citiesRes.data.map(a => a.city).filter(Boolean))]
+    availableTypes.value = [...new Set(typesRes.data.map(a => a.type).filter(Boolean))]
+    
+   // Options in update report configuration
+    reportConfigs['attractions-by-filter'].params[0].options = availableCities.value
+    reportConfigs['attractions-by-filter'].params[1].options = availableTypes.value
+  } catch (error) {
+    console.error('Error fetching filter options:', error)
+  }
+}
+
+const closeReportsModal = () => {
+  showReportsModal.value = false
+  selectedReport.value = ''
+  reportParams.value = {}
+  reportResults.value = null
+}
+
+
+const formatNumber = (num) => {
+  return new Intl.NumberFormat('en-MY', {
+    style: 'currency',
+    currency: 'MYR',
+    minimumFractionDigits: 2
+  }).format(num)
+}
+
+
+watch(tab, () => {
+  searchQuery.value = ''
+  if (tab.value === 'reports') {
+   // Get filter options when switching to the Reports page
+    fetchFilterOptions()
+    showReportGenerator.value = true
+    reportResults.value = null
+  } else {
+    showReportGenerator.value = false
+    reportResults.value = null
+  }
+  fetchData()
+})
 
 /* =====================
    FORM TEMPLATES FOR EACH TAB
@@ -56,12 +201,7 @@ const formTemplates = {
     entry_fee: '',
     total_cost: '',
   },
-  reports: {
-    name: '',
-    type: '',
-    by: '',
-    date: ''
-  }
+
 }
 
 /* =====================
@@ -73,7 +213,7 @@ const apiEndpoints = {
   attractions: `${API_BASE_URL}/attractions`,
   locations: `${API_BASE_URL}/locations`,
   reservations: `${API_BASE_URL}/reservations`,
-  reports: `${API_BASE_URL}/reports`
+ 
 }
 
 /* =====================
@@ -84,7 +224,7 @@ const employees = ref([])
 const attractions = ref([])
 const locations = ref([])
 const reservations = ref([])
-const reports = ref([])
+
 
 /* =====================
    METHODS
@@ -92,6 +232,12 @@ const reports = ref([])
 // Fetch data from API
 const fetchData = async () => {
   try {
+    if (tab.value === 'reports') {
+    
+      isLoading.value = false
+      return
+    }
+    
     isLoading.value = true
     const endpoint = apiEndpoints[tab.value]
     const response = await axios.get(endpoint)
@@ -112,13 +258,9 @@ const fetchData = async () => {
       case 'reservations':
         reservations.value = response.data
         break
-      case 'reports':
-        reports.value = response.data
-        break
     }
   } catch (error) {
     console.error(`Error fetching ${tab.value}:`, error)
-    // Fallback to dummy data if API fails
     loadDummyData()
   } finally {
     isLoading.value = false
@@ -145,6 +287,90 @@ const loadDummyData = () => {
   if (tab.value === 'reports' && reports.value.length === 0) {
     reports.value = [{ id: 1, name: 'Monthly Sales', type: 'Finance', by: 'Admin', date: '2025-01-01' }]
   }
+}
+
+const runReport = async () => {
+  if (!selectedReport.value) return
+  
+  reportLoading.value = true
+  reportResults.value = null
+  
+  try {
+    const config = reportConfigs[selectedReport.value]
+    
+    // 构建查询参数
+    const params = {}
+    config.params.forEach(param => {
+      if (reportParams.value[param.key] !== undefined && reportParams.value[param.key] !== '') {
+        params[param.key] = reportParams.value[param.key]
+      } else if (param.default !== undefined) {
+        params[param.key] = param.default
+      }
+    })
+    
+    console.log('Running report with params:', params)
+    
+    const response = await axios.get(config.endpoint, { params })
+    
+    if (response.data.success) {
+      reportResults.value = response.data
+    } else {
+      throw new Error(response.data.error || 'Failed to generate report')
+    }
+    
+  } catch (error) {
+    console.error('Error running report:', error)
+    alert(`Failed to run report: ${error.message}`)
+  } finally {
+    reportLoading.value = false
+  }
+}
+
+const openReportGenerator = () => {
+  showReportGenerator.value = true
+  selectedReport.value = 'members-summary'
+  reportParams.value = {}
+  reportResults.value = null
+}
+
+const closeReportGenerator = () => {
+  showReportGenerator.value = false
+}
+
+const exportToCSV = () => {
+  if (!reportResults.value || !reportResults.value.data) return
+  
+  let data = reportResults.value.data
+  if (!Array.isArray(data) || data.length === 0) {
+    alert('No data to export')
+    return
+  }
+  
+  const headers = Object.keys(data[0])
+  const csvRows = [
+    headers.join(','),
+    ...data.map(row => headers.map(header => {
+      const value = row[header]
+      return typeof value === 'string' ? `"${value.replace(/"/g, '""')}"` : value
+    }).join(','))
+  ]
+  
+  const csvContent = csvRows.join('\n')
+  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' })
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = `${selectedReport.value}-${new Date().toISOString().split('T')[0]}.csv`
+  link.click()
+  URL.revokeObjectURL(url)
+}
+
+const formatCurrency = (amount) => {
+  return new Intl.NumberFormat('en-MY', {
+    style: 'currency',
+    currency: 'MYR',
+    minimumFractionDigits: 2
+  }).format(amount || 0)
 }
 
 // Open add modal
@@ -269,6 +495,14 @@ const deleteItem = async (id, index) => {
 /* =====================
    COMPUTED PROPERTIES
 ===================== */
+
+
+const filteredMembers = computed(() => filterBySearch(members.value))
+const filteredEmployees = computed(() => filterBySearch(employees.value))
+const filteredAttractions = computed(() => filterBySearch(attractions.value))
+const filteredLocations = computed(() => filterBySearch(locations.value))
+const filteredReservations = computed(() => filterBySearch(reservations.value))
+
 const filterBySearch = (list) => {
   return list.filter(item =>
     Object.values(item)
@@ -277,13 +511,6 @@ const filterBySearch = (list) => {
       .includes(searchQuery.value.toLowerCase())
   )
 }
-
-const filteredMembers = computed(() => filterBySearch(members.value))
-const filteredEmployees = computed(() => filterBySearch(employees.value))
-const filteredAttractions = computed(() => filterBySearch(attractions.value))
-const filteredLocations = computed(() => filterBySearch(locations.value))
-const filteredReservations = computed(() => filterBySearch(reservations.value))
-const filteredReports = computed(() => filterBySearch(reports.value))
 
 // Get current table data for modal labels
 const getTableConfig = computed(() => {
@@ -340,15 +567,6 @@ const getTableConfig = computed(() => {
         { key: 'entry_fee', label: 'Entry Fee', type: 'number' },
         { key: 'total_cost', label: 'Total Cost', type: 'number' },
       ]
-    },
-    reports: {
-      title: 'Add New Report',
-      fields: [
-        { key: 'name', label: 'Report Name', type: 'text' },
-        { key: 'type', label: 'Type', type: 'text' },
-        { key: 'by', label: 'Generated By', type: 'text' },
-        { key: 'date', label: 'Date', type: 'date' }
-      ]
     }
   }
   return configs[tab.value] || {}
@@ -359,12 +577,47 @@ const getTableConfig = computed(() => {
 ===================== */
 onMounted(() => {
   fetchData()
+  // Get city and type options
+  fetchFilterOptions()
 })
+
+// Get filter options
+const fetchFilterOptions = async () => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/attractions`)
+    
+    if (response.data && Array.isArray(response.data)) {
+    
+      const cities = [...new Set(response.data.map(a => a.city).filter(Boolean))]
+      availableCities.value = cities.sort()
+      
+      
+      const types = [...new Set(response.data.map(a => a.type).filter(Boolean))]
+      availableTypes.value = types.sort()
+    }
+  } catch (error) {
+    console.error('Error fetching filter options:', error)
+  }
+}
 
 watch(tab, () => {
   searchQuery.value = ''
+  if (tab.value !== 'reports') {
+    showReportGenerator.value = false
+    reportResults.value = null
+  }
   fetchData()
 })
+
+
+const getParamOptions = (paramKey) => {
+  if (paramKey === 'city') {
+    return availableCities.value
+  } else if (paramKey === 'type') {
+    return availableTypes.value
+  }
+  return []
+}
 </script>
 
 <template>
@@ -387,27 +640,27 @@ watch(tab, () => {
       <!-- CONTENT -->
       <div class="w-full pl-64 p-6 bg-amber-50 min-h-screen">
 
-        <!-- HEADER WITH SEARCH AND ADD BUTTON -->
-        <div class="flex justify-between items-center mb-6">
-          <input
-            v-model="searchQuery"
-            type="text"
-            :placeholder="`Search ${tab}...`"
-            class="ml-4 w-72 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-amber-400"
-          />
-          <button
-            @click="openAddModal"
-            class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
-          >
-            <span>+ Add New</span>
-          </button>
-        </div>
+  <!-- HEADER - Only displayed on non-Reports pages -->
+  <div v-if="tab !== 'reports'" class="flex justify-between items-center mb-6">
+    <input
+      v-model="searchQuery"
+      type="text"
+      :placeholder="`Search ${tab}...`"
+      class="ml-4 w-72 px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-amber-400"
+    />
+    <button
+      @click="openAddModal"
+      class="bg-amber-500 hover:bg-amber-600 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-colors"
+    >
+      <span>+ Add New</span>
+    </button>
+  </div>
 
-        <!-- LOADING STATE -->
-        <div v-if="isLoading" class="text-center py-8">
-          <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500"></div>
-          <p class="mt-2 text-gray-600">Loading...</p>
-        </div>
+ <!-- LOADING STATE - also needs conditional display -->
+  <div v-if="isLoading && tab !== 'reports'" class="text-center py-8">
+    <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-amber-500"></div>
+    <p class="mt-2 text-gray-600">Loading...</p>
+  </div>
 
         <!-- MEMBERS -->
         <div v-if="tab === 'members' && !isLoading" class="p-4">
@@ -607,44 +860,246 @@ watch(tab, () => {
           </div>
         </div>
 
-        <!-- REPORTS -->
-        <div v-if="tab === 'reports' && !isLoading" class="p-4">
+<!-- REPORTS TABLE -->
+        <!-- REPORTS PAGE -->
+        <div v-if="tab === 'reports'"class="p-4">
           <h1 class="title">Reports</h1>
-          <div class="overflow-x-auto">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Report Name</th>
-                  <th>Type</th>
-                  <th>Generated By</th>
-                  <th>Date</th>
-                  <th>Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr v-for="(r, index) in filteredReports" :key="r.id || index">
-                  <td>{{ r.name }}</td>
-                  <td>{{ r.type }}</td>
-                  <td>{{ r.by }}</td>
-                  <td>{{ r.date }}</td>
-                  <td>
-                    <button @click="deleteItem(r.report_id, index)" class="text-red-500 hover:text-red-700 text-sm">
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-                <tr v-if="filteredReports.length === 0">
-                  <td colspan="5" class="text-center py-4 text-gray-500">
-                    No reports found
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+          
+          <!-- Report Generator -->
+          <div v-if="showReportGenerator" class="bg-white rounded-lg shadow p-6 mb-6">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="text-xl font-bold">Generate Report</h2>
+              <button @click="closeReportGenerator" class="text-gray-500 hover:text-gray-700">
+                ✕
+              </button>
+            </div>
+            
+            <!-- Report Selection -->
+            <div class="mb-6">
+              <label class="block text-sm font-medium text-gray-700 mb-2">
+                Select Report Type
+              </label>
+              <select 
+                v-model="selectedReport"
+                @change="reportParams = {}"
+                class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+              >
+                <option value="" disabled>Select a report...</option>
+                <option v-for="(config, key) in reportConfigs" :key="key" :value="key">
+                  {{ config.name }}
+                </option>
+              </select>
+              
+              <p v-if="selectedReport" class="mt-2 text-sm text-gray-600">
+                {{ reportConfigs[selectedReport]?.description }}
+              </p>
+            </div>
+            
+            <!-- Parameter input -->
+            <div v-if="selectedReport && reportConfigs[selectedReport].params.length > 0" class="mb-6">
+              <h3 class="text-lg font-medium mb-3">Report Parameters</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div v-for="param in reportConfigs[selectedReport].params" :key="param.key">
+                  <label class="block text-sm font-medium text-gray-700 mb-1">
+                    {{ param.label }}
+                    <span v-if="param.required" class="text-red-500">*</span>
+                  </label>
+                  
+                
+                  <input
+                    v-if="param.type !== 'select'"
+                    v-model="reportParams[param.key]"
+                    :type="param.type"
+                    :placeholder="param.placeholder || `Enter ${param.label.toLowerCase()}`"
+                    :min="param.min"
+                    :max="param.max"
+                    class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  />
+                  
+                
+                  <select
+                    v-else
+                    v-model="reportParams[param.key]"
+                    class="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                  >
+                    <option value="">All {{ param.label }}</option>
+                   
+                    <option 
+                      v-for="option in getParamOptions(param.key)" 
+                      :key="option" 
+                      :value="option"
+                    >
+                      {{ option }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            
+          
+            <button
+              @click="runReport"
+              :disabled="reportLoading"
+              class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600 transition-colors disabled:opacity-50"
+            >
+              <span v-if="reportLoading">Running...</span>
+              <span v-else>Run Report</span>
+            </button>
+          </div>
+          
+          <!-- Report Results -->
+          <div v-if="reportResults" class="bg-white rounded-lg shadow p-6">
+            <div class="flex justify-between items-center mb-4">
+              <h2 class="text-xl font-bold">Report Results</h2>
+              <div class="flex gap-2">
+                <button
+                  @click="exportToCSV"
+                  class="px-3 py-1 bg-gray-500 text-white rounded hover:bg-gray-600 text-sm"
+                  v-if="reportResults.data && Array.isArray(reportResults.data) && reportResults.data.length > 0"
+                >
+                  📥 Export CSV
+                </button>
+              </div>
+            </div>
+            
+            <!-- Report Information -->
+            <div class="mb-4 p-3 bg-blue-50 rounded">
+              <p class="font-medium">{{ reportConfigs[selectedReport]?.name }}</p>
+              <p v-if="reportResults.period" class="text-sm">Period: {{ reportResults.period }}</p>
+              <p v-if="reportResults.count !== undefined" class="text-sm">Records: {{ reportResults.count }}</p>
+            </div>
+            
+            <!-- Results are displayed based on report type -->
+            <div v-if="selectedReport === 'members-summary' && reportResults.data">
+              <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+                <div class="bg-blue-50 p-4 rounded-lg shadow">
+                  <p class="text-sm text-blue-600">Total Members</p>
+                  <p class="text-2xl font-bold text-blue-700">{{ reportResults.data.total_members }}</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg shadow">
+                  <p class="text-sm text-green-600">With Preferences</p>
+                  <p class="text-2xl font-bold text-green-700">{{ reportResults.data.members_with_preferences }}</p>
+                </div>
+                <div class="bg-yellow-50 p-4 rounded-lg shadow">
+                  <p class="text-sm text-yellow-600">Expired Members</p>
+                  <p class="text-2xl font-bold text-yellow-700">{{ reportResults.data.expired_members }}</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg shadow">
+                  <p class="text-sm text-purple-600">Expiring Soon</p>
+                  <p class="text-lg font-bold text-purple-700">
+                    {{ reportResults.data.earliest_expiry }} to {{ reportResults.data.latest_expiry }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            
+            <div v-else-if="selectedReport === 'revenue-report' && reportResults.totals">
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                <div class="bg-blue-50 p-4 rounded-lg shadow">
+                  <p class="text-sm text-blue-600">Total Reservations</p>
+                  <p class="text-2xl font-bold text-blue-700">{{ reportResults.totals.total_reservations }}</p>
+                </div>
+                <div class="bg-green-50 p-4 rounded-lg shadow">
+                  <p class="text-sm text-green-600">Total Visitors</p>
+                  <p class="text-2xl font-bold text-green-700">{{ reportResults.totals.total_visitors }}</p>
+                </div>
+                <div class="bg-purple-50 p-4 rounded-lg shadow">
+                  <p class="text-sm text-purple-600">Total Revenue</p>
+                  <p class="text-2xl font-bold text-purple-700">{{ formatCurrency(reportResults.totals.total_revenue) }}</p>
+                </div>
+              </div>
+              
+              <div v-if="reportResults.monthly_data && reportResults.monthly_data.length > 0">
+                <h3 class="text-lg font-bold mb-3">Monthly Breakdown</h3>
+                <div class="overflow-x-auto">
+                  <table class="min-w-full bg-white">
+                    <thead>
+                      <tr class="bg-gray-100">
+                        <th class="px-4 py-2 text-left">Month</th>
+                        <th class="px-4 py-2 text-left">Reservations</th>
+                        <th class="px-4 py-2 text-left">Visitors</th>
+                        <th class="px-4 py-2 text-left">Revenue</th>
+                        <th class="px-4 py-2 text-left">Avg/Reservation</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="(item, index) in reportResults.monthly_data" :key="index" class="border-t">
+                        <td class="px-4 py-2">{{ item.month }}</td>
+                        <td class="px-4 py-2">{{ item.total_reservations }}</td>
+                        <td class="px-4 py-2">{{ item.total_visitors }}</td>
+                        <td class="px-4 py-2">{{ formatCurrency(item.total_revenue) }}</td>
+                        <td class="px-4 py-2">{{ formatCurrency(item.average_revenue_per_reservation) }}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+            
+           
+            <div v-else-if="reportResults.data && Array.isArray(reportResults.data) && reportResults.data.length > 0">
+              <div class="overflow-x-auto">
+                <table class="min-w-full bg-white">
+                  <thead>
+                    <tr class="bg-gray-100">
+                      <th 
+                        v-for="(value, key) in reportResults.data[0]" 
+                        :key="key"
+                        class="px-4 py-2 text-left"
+                      >
+                        {{ key.replace(/_/g, ' ').toUpperCase() }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr 
+                      v-for="(row, index) in reportResults.data" 
+                      :key="index"
+                      class="border-t hover:bg-gray-50"
+                    >
+                      <td 
+                        v-for="(value, key) in row" 
+                        :key="key"
+                        class="px-4 py-2"
+                      >
+                        <span v-if="key.includes('revenue') || key.includes('fee') || key.includes('cost')">
+                          {{ formatCurrency(value) }}
+                        </span>
+                        <span v-else>
+                          {{ value }}
+                        </span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="mt-2 text-sm text-gray-500">Showing {{ reportResults.data.length }} records</p>
+            </div>
+            
+            <div v-else class="text-center py-8 text-gray-500">
+              No data found for this report
+            </div>
+          </div>
+          
+         
+          <div v-if="!showReportGenerator && !reportResults" class="bg-white rounded-lg shadow p-6">
+            <h2 class="text-xl font-bold mb-4">Available Reports</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div 
+                v-for="(config, key) in reportConfigs" 
+                :key="key"
+                class="border rounded-lg p-4 hover:bg-gray-50 cursor-pointer"
+                @click="selectedReport = key; showReportGenerator = true"
+              >
+                <h3 class="font-bold text-lg mb-2">{{ config.name }}</h3>
+                <p class="text-gray-600 text-sm">{{ config.description }}</p>
+              </div>
+            </div>
           </div>
         </div>
-
       </div>
     </div>
+
 
     <!-- ADD MODAL (Slides from right) -->
     <div v-if="showAddModal" class="fixed inset-0 z-50 overflow-hidden">
@@ -731,6 +1186,7 @@ watch(tab, () => {
 </template>
 
 <style scoped>
+
 .menu-item {
   @apply text-xl p-3 border-b-2 border-b-amber-200 font-mono hover:bg-amber-200 cursor-pointer transition-colors;
 }
@@ -753,26 +1209,5 @@ watch(tab, () => {
 
 .table tr:hover {
   @apply bg-amber-50;
-}
-
-/* Modal Animation */
-.modal-enter-active,
-.modal-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.modal-enter-from,
-.modal-leave-to {
-  opacity: 0;
-}
-
-.modal-slide-enter-active,
-.modal-slide-leave-active {
-  transition: transform 0.3s ease;
-}
-
-.modal-slide-enter-from,
-.modal-slide-leave-to {
-  transform: translateX(100%);
 }
 </style>
