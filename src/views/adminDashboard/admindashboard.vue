@@ -4,7 +4,7 @@ import NavBar from '../../components/NavBar.vue'
 import axios from 'axios'
 
 // API base URL - update this with your actual backend URL
-const API_BASE_URL = 'http://localhost:5000/api'
+const API_BASE_URL = 'https://amassignment.onrender.com/api'
 
 /* =====================
    STATE

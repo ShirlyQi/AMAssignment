@@ -139,7 +139,7 @@ export default {
 
       try {
         const response = await axios.post(
-          "http://localhost:5000/api/assign-employee",
+          "https://amassignment.onrender.com/api/assign-employee",
           {
             attractionName: this.formData.attraction
           }
@@ -159,7 +159,7 @@ export default {
 
 
       try{
-        const response = await axios.post("http://localhost:5000/api/reservations", this.submittedData)
+        const response = await axios.post("https://amassignment.onrender.com/api/reservations", this.submittedData)
         console.log("submit", response.data)
       } catch (error) {
         console.error(`Error adding:`, error)
