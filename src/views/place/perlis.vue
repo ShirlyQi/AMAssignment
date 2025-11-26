@@ -27,9 +27,9 @@ import instagram from '/src/assets/ig.png'
       </p>
 
       <div class="text-center">
-        <button class="mt-10 px-10 py-3 bg-[#9C6B4E] text-white rounded-full">
-          SUBMIT FORM
-        </button>
+        <router-link to="/cperlis"><button class="mt-10 px-10 py-3 bg-[#9C6B4E] text-white rounded-full">
+        SUBMIT FORM
+      </button></router-link>
       </div>
     </div>
   </section>

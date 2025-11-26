@@ -31,9 +31,9 @@ import instagram from '/src/assets/ig.png'
     </div>
 
     <div class="text-center">
-      <button class="mt-12 px-10 py-3 bg-[#9C6B4E] text-white rounded-full">
+      <router-link to="/csarawak"><button class="mt-12 px-10 py-3 bg-[#9C6B4E] text-white rounded-full">
         SUBMIT FORM
-      </button>
+      </button></router-link>
     </div>
   </section>
 

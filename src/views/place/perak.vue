@@ -52,9 +52,9 @@ import perak4 from '/src/assets/perak4.jpg'
     </p>
 
     <div class="text-center mt-10">
-      <button class="px-12 py-3 bg-[#9C6B4E] text-white rounded-full">
+      <router-link to="/cperak"><button class="px-12 py-3 bg-[#9C6B4E] text-white rounded-full">
         SUBMIT FORM
-      </button>
+      </button></router-link>
     </div>
   </section>
 

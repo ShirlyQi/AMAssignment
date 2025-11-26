@@ -30,9 +30,9 @@ import nsTradition from '/src/assets/ns-tradition.jpg'
     <img :src="nsTradition" class="w-full h-full object-cover rounded-xl " />
     
     <div class="md:col-span-3 text-center mt-10">
-      <button class="px-12 py-3 bg-[#9C6B4E] text-white rounded-full">
+      <router-link to="/cn9"><button class="px-12 py-3 bg-[#9C6B4E] text-white rounded-full">
         SUBMIT FORM
-      </button>
+      </button></router-link>
     </div>
   </section>
 <FooterBar />

@@ -28,9 +28,9 @@ import penangIsland from '/src/assets/penang-island.jpeg'
       </p>
 
       <div class="mt-10">
-        <button class="px-12 py-3 bg-[#9C6B4E] text-white rounded-full">
-          SUBMIT FORM
-        </button>
+        <router-link to="/cpenang"><button class="px-12 py-3 bg-[#9C6B4E] text-white rounded-full">
+        SUBMIT FORM
+      </button></router-link>
       </div>
     </div>
   </section>

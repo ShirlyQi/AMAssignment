@@ -61,9 +61,9 @@ import klFood from '/src/assets/kl-food.jpg'
 </div>
 
     <div class="text-center">
-      <button class="mt-12 px-12 py-3 bg-[#9C6B4E] text-white rounded-full">
+      <router-link to="/ckl"><button class="mt-12 px-12 py-3 bg-[#9C6B4E] text-white rounded-full">
         SUBMIT FORM
-      </button>
+      </button></router-link>
     </div>
   </section>
 
