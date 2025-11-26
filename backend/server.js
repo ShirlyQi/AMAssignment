@@ -106,19 +106,8 @@ app.use((err, req, res, next) => {
 })
 
 
-const PORT = process.env.PORT || 5000
-const HOST = process.env.HOST || "localhost"
+const PORT = process.env.PORT || 5000;
 
-app.listen(PORT, HOST, () => {
-  console.log("\n" + "=".repeat(50))
-  console.log("🚀 Visit Malaysia 2026 Backend Server")
-  console.log("=".repeat(50))
-  console.log(`✅ Server running on: http://${HOST}:${PORT}`)
-  console.log("\n📡 Available Endpoints:")
-  console.log(`   🔗 Home: http://${HOST}:${PORT}/`)
-  console.log(`   📊 Health: http://${HOST}:${PORT}/api/health`)
-  console.log(`   🗄️  DB Test: http://${HOST}:${PORT}/api/test-db`)
-  console.log(`   🔐 Register: http://${HOST}:${PORT}/api/auth/register`)
-  console.log(`   🔑 Login: http://${HOST}:${PORT}/api/auth/login`)
-  console.log("\n" + "=".repeat(50))
-})
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
