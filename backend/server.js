@@ -7,7 +7,7 @@ const app = express()
 
 
 app.use(cors({
-  origin: "http://localhost:5173", // Vue开发服务器地址
+  origin: "https://amassignment.onrender.com", // Vue开发服务器地址
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"]
