@@ -528,7 +528,7 @@ export default {
   margin-bottom: 30px;
 }
 
-/* 大个的、居中的NEXT按钮样式 */
+
 .next-section {
   margin-top: 40px;
   text-align: center;
@@ -568,7 +568,6 @@ export default {
   box-shadow: 0 0 0 4px rgba(30, 60, 114, 0.2);
 }
 
-/* 响应式设计 */
 @media (max-width: 768px) {
   .big-next-button {
     padding: 20px 40px;

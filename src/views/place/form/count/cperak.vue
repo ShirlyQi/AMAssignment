@@ -529,7 +529,7 @@ export default {
   margin-bottom: 30px;
 }
 
-/* 大个的、居中的NEXT按钮样式 */
+
 .next-section {
   margin-top: 40px;
   text-align: center;
