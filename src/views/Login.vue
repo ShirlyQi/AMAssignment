@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Eye, EyeOff } from 'lucide-vue-next'
 import logo from '../assets/logo.png'
-import kltower from '../assets/kltower.jpeg';
+import kltower from '../assets/kltower.jpeg'
 
 const router = useRouter()
 
@@ -27,15 +27,14 @@ function login() {
 
 <template>
   <div class="h-screen flex items-center justify-center relative">
-  <!-- 背景圖 + 模糊 -->
-  <div
-    class="absolute inset-0 bg-cover bg-center filter blur-sm"
-    :style="{ backgroundImage: `url(${kltower})` }"
-  ></div>
+    <!-- 背景圖 + 模糊 -->
+    <div
+      class="absolute inset-0 bg-cover bg-center filter blur-sm"
+      :style="{ backgroundImage: `url(${kltower})` }"
+    ></div>
 
-  <!-- 白色內容卡片 -->
-  <div class="relative w-96 bg-white p-8 rounded shadow-lg">
-
+    <!-- 白色內容卡片 -->
+    <div class="relative w-96 bg-white p-8 rounded shadow-lg">
       <!-- Logo -->
       <img
         :src="logo"
@@ -43,7 +42,6 @@ function login() {
         alt="Logo"
       />
 
-      
 
       <h2 class="text-2xl font-bold text-center mb-6">
         Login
@@ -81,11 +79,18 @@ function login() {
         </button>
       </div>
 
-      <!-- Forgot password -->
-      <div class="text-right mb-6">
+      <!-- New Member? 與 Forgot password? 同行 -->
+      <div class="flex justify-between mb-6 text-sm">
+        <router-link
+          to="/signup"
+          class="text-amber-700 hover:underline"
+        >
+          New Member?
+        </router-link>
+
         <router-link
           to="/forgot-password"
-          class="text-sm text-amber-700 hover:underline"
+          class="text-amber-700 hover:underline"
         >
           Forgot password?
         </router-link>

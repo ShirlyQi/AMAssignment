@@ -33,7 +33,7 @@ function submit() {
       <!-- Logo -->
       <img
         :src="logo"
-        class="w-40 mx-auto mb-6"
+        class="w-60 mx-auto mb-6"
         alt="Logo"
       />
 
