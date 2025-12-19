@@ -1,15 +1,15 @@
 <template>
   <nav
-    class="sticky top-0 z-50 bg-white border-b"
+    class="sticky top-0 z-50 bg-amber-100 border-b"
   >
     <div
-      class="max-w-7xl mx-auto flex items-center justify-between px-10 h-24"
+      class="max-w-7xl mx-auto flex items-center justify-between px-5 h-24"
     >
       <!-- LOGO (IMAGE) -->
       <img
-        src="../assets/logo.png"
+        src="../assets/logo_2.png"
         alt="Visit Malaysia 2026"
-        class="h-12 object-contain"
+        class="w-40 "
       />
 
       <!-- MENU -->
@@ -17,8 +17,6 @@
   <li><router-link to="/dashboard" class="nav-item">HOME</router-link></li>
   <li><router-link to="/about" class="nav-item">ABOUT MALAYSIA</router-link></li>
   <li><router-link to="/states" class="nav-item">STATE IN MALAYSIA</router-link></li>
-  <li><router-link to="/things-to-do" class="nav-item">THINGS TO DO</router-link></li>
-  <li><router-link to="/travel-idea" class="nav-item">TRAVEL IDEA</router-link></li>
   <li><router-link to="/profile" class="nav-item">PROFILE</router-link></li>
 </ul>
 
