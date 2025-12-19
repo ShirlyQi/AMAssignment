@@ -17,9 +17,14 @@ import natureImg from '../assets/nature.jpg'
 import cultureImg from '../assets/culture.jpg'
 import islandImg from '../assets/island.jpg'
 
+// social media icons
+import facebook from '../assets/fb.png'
+import instagram from '../assets/ig.png'
+
 </script>
 
 <template>
+  <div>
   <div>
     <NavBar />
 
@@ -80,5 +85,28 @@ taste the mouth-watering cuisine of Malaysia.
     </section>
 
     <FooterBar />
+    
+  </div>
+   <div class="fixed top-1/2 left-4 transform -translate-y-1/2 flex flex-col space-y-2 z-50 opacity-70">
+      
+  <!-- Facebook -->
+  <a href="https://www.facebook.com/share/1BuieJf2kt/">
+    <img
+      :src="facebook"
+      alt="Facebook"
+      class="w-12 h-12"
+      @error="elementPath = '/images/placeholder.jpg'"
+    />
+  </a>
+  <!-- Instagram -->
+  <a href="https://www.instagram.com/visitmalaysiaofficial?igsh=MWt3NGMzeTN5N255eg==">
+    <img
+      :src="instagram"
+      alt="Instagram"
+      class="w-12 h-12"
+      @error="elementPath = '/images/placeholder.jpg'"
+    />
+  </a>
+</div>
   </div>
 </template>
