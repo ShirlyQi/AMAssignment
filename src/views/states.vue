@@ -32,50 +32,106 @@ import instagram from '../assets/ig.png'
       </h2>
 
       <div class="grid grid-cols-5 gap-10 max-w-6xl mx-auto text-center">
-        <div>
-          <img :src="sabahImg" class="w-24 h-24 rounded-full mx-auto" />
-          <p>SABAH</p>
-        </div>
-        <div>
-          <img :src="kedahImg" class="w-24 h-24 rounded-full mx-auto" />
-          <p>KEDAH</p>
-        </div>
-        <div>
-          <img :src="klImg" class="w-24 h-24 rounded-full mx-auto" />
-          <p>KUALA LUMPUR</p>
-        </div>
-        <div>
-          <img :src="sarawakImg" class="w-24 h-24 rounded-full mx-auto" />
-          <p>SARAWAK</p>
-        </div>
-        <div>
-          <img :src="perakImg" class="w-24 h-24 rounded-full mx-auto" />
-          <p>PERAK</p>
-        </div>
-        <div>
-          <img :src="selangorImg" class="w-24 h-24 rounded-full mx-auto" />
-          <p>SELANGOR</p>
-        </div>
-        <div>
-          <img :src="perlisImg" class="w-24 h-24 rounded-full mx-auto" />
-          <p>PERLIS</p>
-        </div>
-        <div>
-          <img :src="johorImg" class="w-24 h-24 rounded-full mx-auto" />
-          <p>JOHOR</p>
-        </div>
-        <div>
-          <img :src="terengganuImg" class="w-24 h-24 rounded-full mx-auto" />
-          <p>TERENGGANU</p>
-        </div>
-        <div>
-          <img :src="kelantanImg" class="w-24 h-24 rounded-full mx-auto" />
-          <p>KELANTAN</p>
-        </div>
-        <div>
-          <img :src="nsImg" class="w-24 h-24 rounded-full mx-auto" />
-          <p>NEGERI SEMBILAN</p>
-        </div>
+       <router-link to="/sabah" class="nav-item block text-center">
+  <div>
+    <img
+      :src="sabahImg"
+      class="w-24 h-24 rounded-full mx-auto cursor-pointer"
+    />
+    <p>SABAH</p>
+  </div>
+</router-link>
+
+        <router-link to="/kedah" class="nav-item block text-center">
+  <div>
+    <img
+      :src="kedahImg"
+      class="w-24 h-24 rounded-full mx-auto cursor-pointer"
+    />
+    <p>KEDAH</p>
+  </div>
+</router-link>
+        <router-link to="/kl" class="nav-item block text-center">
+  <div>
+    <img
+      :src="klImg"
+      class="w-24 h-24 rounded-full mx-auto cursor-pointer"
+    />
+    <p>KL</p>
+  </div>
+</router-link>
+        <router-link to="/sarawak" class="nav-item block text-center">
+  <div>
+    <img
+      :src="sarawakImg"
+      class="w-24 h-24 rounded-full mx-auto cursor-pointer"
+    />
+    <p>SARAWAK</p>
+  </div>
+</router-link>
+      <router-link to="/perak" class="nav-item block text-center">
+  <div>
+    <img
+      :src="perakImg"
+      class="w-24 h-24 rounded-full mx-auto cursor-pointer"
+    />
+    <p>PERAK</p>
+  </div>
+</router-link>
+        <router-link to="/selangor" class="nav-item block text-center">
+  <div>
+    <img
+      :src="selangorImg"
+      class="w-24 h-24 rounded-full mx-auto cursor-pointer"
+    />
+    <p>SELANGOR</p>
+  </div>
+</router-link>
+        <router-link to="/perlis" class="nav-item block text-center">
+  <div>
+    <img
+      :src="perlisImg"
+      class="w-24 h-24 rounded-full mx-auto cursor-pointer"
+    />
+    <p>PERLIS</p>
+  </div>
+</router-link>
+        <router-link to="/johor" class="nav-item block text-center">
+  <div>
+    <img
+      :src="johorImg"
+      class="w-24 h-24 rounded-full mx-auto cursor-pointer"
+    />
+    <p>JOHOR</p>
+  </div>
+</router-link>
+       <router-link to="/terengganu" class="nav-item block text-center">
+  <div>
+    <img
+      :src="terengganuImg"
+      class="w-24 h-24 rounded-full mx-auto cursor-pointer"
+    />
+    <p>TERENGGANU</p>
+  </div>
+</router-link>
+        <router-link to="/kelantan" class="nav-item block text-center">
+  <div>
+    <img
+      :src="kelantanImg"
+      class="w-24 h-24 rounded-full mx-auto cursor-pointer"
+    />
+    <p>KELANTAN</p>
+  </div>
+</router-link>
+        <router-link to="/n9" class="nav-item block text-center">
+  <div>
+    <img
+      :src="nsImg"
+      class="w-24 h-24 rounded-full mx-auto cursor-pointer"
+    />
+    <p>NEGERI SEMBILAN</p>
+  </div>
+</router-link>
       </div>
     </section>
 
