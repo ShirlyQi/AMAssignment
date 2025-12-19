@@ -83,14 +83,14 @@ function login() {
       <div class="flex justify-between mb-6 text-sm">
         <router-link
           to="/signup"
-          class="text-amber-700 hover:underline"
+          class="text-blue-600 hover:underline"
         >
           New Member?
         </router-link>
 
         <router-link
           to="/forgot-password"
-          class="text-amber-700 hover:underline"
+          class="text-blue-600 hover:underline"
         >
           Forgot password?
         </router-link>
