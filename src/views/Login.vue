@@ -85,7 +85,7 @@ function login() {
           to="/signup"
           class="text-blue-600 hover:underline"
         >
-          New Member?
+          New user?
         </router-link>
 
         <router-link
