@@ -14,11 +14,11 @@
 
       <!-- MENU -->
       <ul class="flex items-center space-x-10 text-sm font-semibold">
+  <li><router-link to="/dashboard" class="nav-item">HOME</router-link></li>
   <li><router-link to="/about" class="nav-item">ABOUT MALAYSIA</router-link></li>
   <li><router-link to="/states" class="nav-item">STATE IN MALAYSIA</router-link></li>
   <li><router-link to="/things-to-do" class="nav-item">THINGS TO DO</router-link></li>
   <li><router-link to="/travel-idea" class="nav-item">TRAVEL IDEA</router-link></li>
-  <li><router-link to="/profile" class="nav-item">LOGOUT</router-link></li>
   <li><router-link to="/profile" class="nav-item">PROFILE</router-link></li>
 </ul>
 

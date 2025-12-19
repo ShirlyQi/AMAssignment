@@ -53,10 +53,23 @@ import islandImg from '../assets/island.jpg'
         <img :src="melakaImg" class="rounded-lg" />
         <img :src="langkawiImg" class="rounded-lg" />
       </div>
-    </section>
 
+
+<section class="bg-gray-50 py-16">
     <!-- WHAT WE CAN DO -->
-    <section class="bg-gray-50 py-16">
+      <div class="grid grid-cols-2 gap-10 items-center">
+        <h2 class="text-4xl font-black">
+          WHAT <span class="text-amber-700">WE CAN DO</span>
+        </h2>
+
+        <p class="text-gray-600">
+          Indulge in an awe-inspiring adventure of a lifetime. Enjoy 
+fun times with your family, explore the wilderness and 
+taste the mouth-watering cuisine of Malaysia.
+        </p>
+      </div>
+      </section>
+    
       <div class="max-w-6xl mx-auto grid grid-cols-3 gap-6">
         <img :src="cityImg" class="rounded-lg" />
         <img :src="foodImg" class="rounded-lg" />
