@@ -100,7 +100,7 @@
             </div>
           </div>
         </div>
-        <button @click="closeConfirmation" class="close-btn">OK</button>
+        <router-link to="/Home"><button @click="closeConfirmation" class="close-btn">OK</button></router-link>
       </div>
     </div>
   </div>
