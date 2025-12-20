@@ -37,7 +37,7 @@
       </div>
 
       <div class="form-group">
-        <label for="personCount">HOW MANY PERSON:</label>
+        <label for="personCount">HOW MANY PERSON: (Please confirm price in previous page)</label>
         <input 
           type="number" 
           id="personCount" 
@@ -100,7 +100,7 @@
             </div>
           </div>
         </div>
-        <router-link to="/csabah"><button @click="closeConfirmation" class="close-btn">OK</button></router-link>
+        <button @click="closeConfirmation" class="close-btn">OK</button>
       </div>
     </div>
   </div>

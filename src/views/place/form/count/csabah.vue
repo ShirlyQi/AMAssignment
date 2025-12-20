@@ -188,6 +188,13 @@
           </div>
         </div>
         <p class="allocation-note">Rooms are allocated to minimize costs while ensuring comfort.</p>
+        
+        <!-- 大个的、居中的NEXT按钮 -->
+        <div class="next-section">
+          <router-link to="/fsabah"><button class="big-next-button" @click="handleNextClick">
+            NEXT
+          </button></router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -357,7 +364,8 @@ export default {
       return roomTypes.map((type, index) => 
         `${index + 1}. ${type} room`
       ).join('<br>');
-    }
+    },
+
   },
   mounted() {
     // 初始验证
@@ -642,7 +650,7 @@ export default {
 
 .room-allocation {
   margin-top: 40px;
-  padding: 20px;
+  padding: 30px;
   background-color: #f0f7ff;
   border-radius: 10px;
   border: 2px solid #e3f2fd;
@@ -652,6 +660,7 @@ export default {
   color: #1e3c72;
   margin-bottom: 20px;
   text-align: center;
+  font-size: 24px;
 }
 
 .rooms-container {
@@ -685,6 +694,7 @@ export default {
 .room-details h4 {
   margin: 0 0 5px 0;
   color: #333;
+  font-size: 18px;
 }
 
 .room-details p {
@@ -705,5 +715,83 @@ export default {
   font-style: italic;
   font-size: 14px;
   margin-top: 15px;
+  margin-bottom: 30px;
+}
+
+/* 大个的、居中的NEXT按钮样式 */
+.next-section {
+  margin-top: 40px;
+  text-align: center;
+  padding: 20px;
+  border-top: 2px solid #eee;
+}
+
+.big-next-button {
+  padding: 25px 80px;
+  background-color: #1e3c72;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  box-shadow: 0 6px 20px rgba(30, 60, 114, 0.3);
+  min-width: 300px;
+}
+
+.big-next-button:hover {
+  background-color: #2a5298;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(30, 60, 114, 0.4);
+}
+
+.big-next-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 15px rgba(30, 60, 114, 0.3);
+}
+
+.big-next-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(30, 60, 114, 0.2);
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+  .big-next-button {
+    padding: 20px 40px;
+    font-size: 24px;
+    min-width: 250px;
+  }
+}
+
+@media (max-width: 480px) {
+  .big-next-button {
+    padding: 18px 30px;
+    font-size: 20px;
+    min-width: 200px;
+  }
+}
+
+@media (max-width: 900px) {
+  .breakdown-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-container {
+    padding: 10px;
+  }
+  
+  .information-form {
+    padding: 20px;
+  }
+  
+  .header h1 {
+    font-size: 20px;
+  }
 }
 </style>
