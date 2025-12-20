@@ -49,9 +49,9 @@ import sabahCulture from '/src/assets/sabah-culture.jpg'
 
       <!-- Submit 按钮 -->
       <div class="flex justify-center mt-14">
-        <button class="px-12 py-3 bg-[#9C6B4E] text-white rounded-full hover:bg-[#b27d65] transition-colors">
-          SUBMIT FORM
-        </button>
+        <router-link to="/fsabah"><button class="px-12 py-3 bg-[#9C6B4E] text-white rounded-full hover:bg-[#b27d65] transition-colors">
+          SUBMIT FORM 
+        </button></router-link>
       </div>
     </main>
 
