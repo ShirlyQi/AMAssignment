@@ -10,7 +10,7 @@
         <input 
           type="text" 
           id="name" 
-          v-model="formData.name"
+          v-model="formData.member"
           placeholder="Enter your name"
           required
         >
@@ -21,7 +21,7 @@
         <input 
           type="date" 
           id="date" 
-          v-model="formData.date"
+          v-model="formData.reservation_date"
           required
         >
       </div>
@@ -31,35 +31,12 @@
         <input 
           type="time" 
           id="time" 
-          v-model="formData.time"
+          v-model="formData.reservation_time"
           required
         >
       </div>
 
-      <div class="form-group">
-        <label for="personCount">HOW MANY PERSON: (Please confirm price in previous page)</label>
-        <input 
-          type="number" 
-          id="personCount" 
-          v-model="formData.personCount"
-          placeholder="Number of persons"
-          min="1"
-          max="50"
-          required
-        >
-      </div>
-
-      <div class="form-group">
-        <label>EMPLOYEE:</label>
-        <div class="employee-display">
-          <div class="employee-placeholder">
-            Will be randomly assigned after submission
-          </div>
-          <div class="employee-list-hint">
-            Available employees: jack, qi, qun, kj, jeff
-          </div>
-        </div>
-      </div>
+      
 
       <button type="submit" class="submit-btn">
         SUBMIT
@@ -80,23 +57,35 @@
           <div class="submitted-info">
             <div class="info-row">
               <span class="info-label">Name:</span>
-              <span class="info-value">{{ submittedData.name }}</span>
+              <span class="info-value">{{ submittedData.member }}</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Date:</span>
-              <span class="info-value">{{ submittedData.date }}</span>
+              <span class="info-label">Attraction:</span>
+              <span class="info-value">{{ submittedData.attraction }}</span>
             </div>
             <div class="info-row">
-              <span class="info-label">Time:</span>
-              <span class="info-value">{{ submittedData.time }}</span>
+              <span class="info-label">Reservation Date:</span>
+              <span class="info-value">{{ submittedData.reservation_date }}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Reservation Time:</span>
+              <span class="info-value">{{ submittedData.reservation_time }}</span>
             </div>
             <div class="info-row">
               <span class="info-label">How many people:</span>
-              <span class="info-value">{{ submittedData.personCount }}</span>
+              <span class="info-value">{{ submittedData.number_of_visitors }}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Entry Fee:</span>
+              <span class="info-value">{{ submittedData.entry_fee }}</span>
+            </div>
+            <div class="info-row">
+              <span class="info-label">Total Cost:</span>
+              <span class="info-value">{{ submittedData.total_cost }}</span>
             </div>
             <div class="info-row">
               <span class="info-label">Assign employee:</span>
-              <span class="info-value employee-highlight">{{ assignedEmployee }}</span>
+              <span class="info-value employee-highlight">{{ submittedData.employee }}</span>
             </div>
           </div>
         </div>
@@ -107,15 +96,21 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   name: 'InformationForm',
   data() {
     return {
       formData: {
-        name: '',
-        date: this.getTodayDate(),
-        time: this.getCurrentTime(),
-        personCount: '',
+        member: '',
+        attraction: '',
+        employee: '',
+        reservation_date: this.getTodayDate(),
+        reservation_time: this.getCurrentTime(),
+        number_of_visitors: '',
+        entry_fee: '',
+        total_cost: '',
       },
       employees: ['jack', 'qi', 'qun', 'kj', 'jeff'],
       showConfirmation: false,
@@ -140,26 +135,49 @@ export default {
       return this.employees[randomIndex];
     },
     
-    submitForm() {
+    async submitForm() {
       // 保存提交的数据
+      this.formData.number_of_visitors = localStorage.getItem("number_visitors")
+      this.formData.attraction = localStorage.getItem("attraction")
+      this.formData.entry_fee = localStorage.getItem("entry_fee")
+      this.formData.total_cost = localStorage.getItem("total_cost")
+      // sabah is 
+      this.formData.employee = "Wei Qi"
       this.submittedData = { ...this.formData };
-      
-      // 随机分配员工
-      this.assignedEmployee = this.getRandomEmployee();
-      
+
       // 在实际应用中，这里可以发送数据到服务器
       console.log('Form submitted:', this.formData);
-      console.log('Assigned employee:', this.assignedEmployee);
-      
-      // 显示确认对话框
+
+
+      try{
+        const response = await axios.post("http://localhost:5000/api/reservations", this.submittedData)
+        console.log("submit", response.data)
+      } catch (error) {
+        console.error(`Error adding:`, error)
+        alert(`Failed to add. Please try again.`)
+      } finally {
+        // 显示确认对话框
       this.showConfirmation = true;
+      }
+
+
+
+
+      
+      
+      
+      
       
       // 重置表单
       this.formData = {
-        name: '',
-        date: this.getTodayDate(),
-        time: this.getCurrentTime(),
-        personCount: '',
+        member: '',
+        attraction: '',
+        employee: '',
+        reservation_date: this.getTodayDate(),
+        reservation_time: this.getCurrentTime(),
+        number_of_visitors: '',
+        entry_fee: '',
+        total_cost: '',
       };
     },
     

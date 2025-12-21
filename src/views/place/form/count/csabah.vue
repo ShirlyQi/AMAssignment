@@ -5,29 +5,12 @@
     </div>
     
     <div class="calculator-container">
-      <!-- 人数输入区域 -->
-      <div class="input-section">
-        <div class="input-group">
-          <label for="personCount">NUMBER OF PEOPLE (PAX):</label>
-          <div class="input-with-buttons">
-            <button @click="decreaseCount" class="count-btn" :disabled="personCount <= 1">-</button>
-            <input 
-              type="number" 
-              id="personCount" 
-              v-model.number="personCount"
-              min="1"
-              max="50"
-              @change="validateCount"
-            >
-            <button @click="increaseCount" class="count-btn">+</button>
-          </div>
-        </div>
-      </div>
+      
 
       <!-- 费用计算表格 -->
-      <div class="calculation-tables">
+      <!-- <div class="calculation-tables"> -->
         <!-- 左边：基于总人数的费用 -->
-        <div class="table-section">
+        <!-- <div class="table-section">
           <h2>ACTIVITY THAT CAN PLAY (PER PAX)</h2>
           <div class="table-container">
             <table class="pricing-table">
@@ -65,10 +48,10 @@
               </tbody>
             </table>
           </div>
-        </div>
+        </div> -->
 
         <!-- 右边：单人费用预估 -->
-        <div class="table-section">
+        <!-- <div class="table-section">
           <h2>ESTIMATED COST PER PERSON</h2>
           <div class="table-container">
             <table class="estimation-table">
@@ -119,260 +102,173 @@
             </table>
           </div>
         </div>
+      </div> -->
+
+      <!-- attraction details -->
+      <div class="breakdown-section !bg-gray-100">
+        <h3>ATTRACTIONS DETAILS</h3>
+
+        <div class="breakdown-grid">
+          <div
+            v-for="attraction in attractions"
+            :key="attraction.id"
+            @click="selectAttraction(attraction)"
+            class="breakdown-item hover:bg-blue-100 cursor-pointer"
+            :class="{ '!bg-blue-300': selectedAttraction?.id === attraction.id }"
+          >
+            <img
+              class="w-11/12 mx-auto mt-4 rounded-md"
+              :src="attraction.image"
+              alt="attraction"
+            />
+
+            <div class="grid grid-cols-4 gap-4 p-4">
+              <div class="col-span-3">
+                <h1 class="font-semibold text-xl">{{ attraction.name }}</h1>
+                <h2 class="text-xs text-gray-500">
+                  {{ attraction.description }}
+                </h2>
+              </div>
+
+              <div class="col-span-1 text-right">
+                <h1 class="text-xl">RM {{ attraction.price }}</h1>
+                <p class="text-xs text-gray-500">Entry Fee</p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <!-- 费用明细说明 -->
-      <div class="breakdown-section">
-        <h3>COST BREAKDOWN DETAILS</h3>
-        <div class="breakdown-grid">
-          <div class="breakdown-item">
-            <div class="breakdown-header entertainment">
-              <h4>ENTERTAINMENT ACTIVITIES</h4>
-              <span class="breakdown-price">RM {{ calculateTotal('entertainment') }}</span>
-            </div>
-            <ul>
-              <li>Snorkeling Equipment Rental</li>
-              <li>Island Hopping Tour</li>
-              <li>Jungle Trekking Guide</li>
-              <li>Transportation to Sites</li>
-              <li>Equipment and Safety Gear</li>
-            </ul>
-          </div>
-          
-          <div class="breakdown-item">
-            <div class="breakdown-header hostel">
-              <h4>ACCOMMODATION</h4>
-              <span class="breakdown-price">RM {{ calculateTotal('hostel') }}</span>
-            </div>
-            <ul>
-              <li>{{ getRoomDescription() }}</li>
-              <li>2 Nights Stay</li>
-              <li>Air-conditioned Rooms</li>
-              <li>Free WiFi Access</li>
-              <li>24/7 Security</li>
-              <li>Basic Toiletries Provided</li>
-            </ul>
-          </div>
-          
-          <div class="breakdown-item">
-            <div class="breakdown-header food">
-              <h4>FOOD & BEVERAGE</h4>
-              <span class="breakdown-price">RM {{ calculateTotal('f&b') }}</span>
-            </div>
-            <ul>
-              <li>6 Meals Total (Breakfast, Lunch, Dinner)</li>
-              <li>Local Cuisine Specialties</li>
-              <li>Drinking Water Provided</li>
-              <li>Welcome Drink</li>
-              <li>Snacks During Activities</li>
-            </ul>
+
+      <!-- 人数输入区域 -->
+      <div class="input-section">
+        <div class="input-group">
+          <label for="personCount">NUMBER OF PEOPLE (PAX):</label>
+          <div class="input-with-buttons">
+            <button @click="decreaseCount" class="count-btn" :disabled="personCount <= 1">-</button>
+            <input 
+              type="number" 
+              id="personCount" 
+              v-model.number="personCount"
+              min="1"
+              max="50"
+              @change="validateCount"
+            >
+            <button @click="increaseCount" class="count-btn">+</button>
           </div>
         </div>
       </div>
 
       <!-- 房间分配可视化 -->
       <div class="room-allocation">
-        <h3>ROOM ALLOCATION</h3>
-        <div class="rooms-container">
-          <div v-for="(room, index) in allocatedRooms" :key="index" class="room-box">
-            <div class="room-type-icon">
-              <span v-if="room.type === 'single'">🛏️</span>
-              <span v-else-if="room.type === 'double'">🛏️🛏️</span>
-              <span v-else>🛏️🛏️🛏️</span>
-            </div>
-            <div class="room-details">
-              <h4>{{ room.type.toUpperCase() }} ROOM</h4>
-              <p>{{ room.capacity }} Person{{ room.capacity > 1 ? 's' : '' }}</p>
-              <p class="room-price">RM {{ calculateRoomCost(room.type) }}</p>
-            </div>
-          </div>
-        </div>
-        <p class="allocation-note">Rooms are allocated to minimize costs while ensuring comfort.</p>
-        
-        <!-- 大个的、居中的NEXT按钮 -->
+        <h3>Total Price</h3>
+
+        <h3 class="!text-6xl font-semibold !text-black">
+          RM {{ totalCost }}
+        </h3>
+
+        <p class="allocation-note" v-if="selectedAttraction">
+          {{ personCount }} × RM {{ selectedAttraction.price }}
+        </p>
+
         <div class="next-section">
-          <router-link to="/fsabah"><button class="big-next-button" @click="handleNextClick">
-            NEXT
-          </button></router-link>
+          <router-link to="/fsabah">
+            <button @click="Booking()" :disabled="totalCost==0" :class="{'!bg-gray-400': totalCost == 0}" class="big-next-button">
+              BOOK
+            </button>
+          </router-link>
         </div>
       </div>
+
     </div>
   </div>
 </template>
 
 <script>
+import sabah1 from '../../../../assets/sabah1.jpeg'
+import sabah2 from '../../../../assets/sabah2.jpeg'
+import sabah3 from '../../../../assets/sabah3.jpeg'
+import sabah4 from '../../../../assets/sabah4.jpeg'
+
 export default {
   name: 'TripCalculator',
   data() {
     return {
       personCount: 1,
-      // 基础价格
-      basePrices: {
-        entertainment: 550,  // 娱乐活动每人
-        hostelSingle: 300,   // 单人房每人
-        hostelDouble: 550,   // 双人房（总共）
-        hostelTriple: 750,   // 三人房（总共）
-        food: 250            // 餐饮每人
-      },
-      // 房间分配规则
-      roomTypes: [
-        { type: 'triple', capacity: 3, pricePerRoom: 750 },
-        { type: 'double', capacity: 2, pricePerRoom: 550 },
-        { type: 'single', capacity: 1, pricePerRoom: 300 }
+      selectedAttraction: null,
+
+      attractions: [
+        {
+          id: 1,
+          name: 'Mount Kinabalu',
+          description: 'Highest peak and UNESCO natural site',
+          price: 50,
+          image: sabah1
+        },
+        {
+          id: 2,
+          name: 'Sepilok Orangutan Rehabilitation Centre',
+          description: 'Orangutan conservation and wildlife',
+          price: 60,
+          image: sabah2
+        },
+        {
+          id: 3,
+          name: 'Sabah Cultural Village',
+          description: 'Cultural exhibits of indigenous peoples',
+          price: 15,
+          image: sabah3
+        },
+        {
+          id: 4,
+          name: 'Sabah Seafood & Local Dishes',
+          description: 'Fresh seafood specialty',
+          price: 10,
+          image: sabah4
+        }
       ]
     }
   },
+
   computed: {
-    // 计算房间分配
-    allocatedRooms() {
-      let remaining = this.personCount;
-      const rooms = [];
-      
-      // 尽量分配三人房
-      while (remaining >= 3) {
-        rooms.push({ type: 'triple', capacity: 3 });
-        remaining -= 3;
-      }
-      
-      // 然后分配双人房
-      if (remaining === 2) {
-        rooms.push({ type: 'double', capacity: 2 });
-        remaining = 0;
-      } else if (remaining === 1) {
-        // 如果还剩1人，检查是否能重新分配
-        if (rooms.length > 0 && rooms[rooms.length - 1].type === 'double') {
-          // 把最后一个双人房换成两个单人房
-          rooms.pop();
-          rooms.push({ type: 'single', capacity: 1 });
-          rooms.push({ type: 'single', capacity: 1 });
-        } else {
-          rooms.push({ type: 'single', capacity: 1 });
-        }
-        remaining = 0;
-      }
-      
-      return rooms;
+    totalCost() {
+      if (!this.selectedAttraction) return 0
+      return this.selectedAttraction.price * this.personCount
     }
   },
+
   methods: {
-    // 增加人数
-    increaseCount() {
-      if (this.personCount < 50) {
-        this.personCount++;
-      }
-    },
-    
-    // 减少人数
-    decreaseCount() {
-      if (this.personCount > 1) {
-        this.personCount--;
-      }
-    },
-    
-    // 验证人数
-    validateCount() {
-      if (this.personCount < 1) {
-        this.personCount = 1;
-      } else if (this.personCount > 50) {
-        this.personCount = 50;
-      }
-    },
-    
-    // 计算各项总费用
-    calculateTotal(category) {
-      switch (category) {
-        case 'entertainment':
-          return this.basePrices.entertainment * this.personCount;
-        case 'hostel':
-          return this.calculateHostelTotal();
-        case 'f&b':
-          return this.basePrices.food * this.personCount;
-        default:
-          return 0;
-      }
-    },
-    
-    // 计算住宿总费用
-    calculateHostelTotal() {
-      let total = 0;
-      this.allocatedRooms.forEach(room => {
-        total += this.calculateRoomCost(room.type);
-      });
-      return total;
-    },
-    
-    // 计算单种房间的费用
-    calculateRoomCost(roomType) {
-      switch (roomType) {
-        case 'single':
-          return this.basePrices.hostelSingle;
-        case 'double':
-          return this.basePrices.hostelDouble;
-        case 'triple':
-          return this.basePrices.hostelTriple;
-        default:
-          return 0;
-      }
-    },
-    
-    // 计算每人平均住宿费用
-    calculatePerPax() {
-      const total = this.calculateHostelTotal();
-      return Math.round(total / this.personCount);
-    },
-    
-    // 计算每人平均总费用
-    calculateAveragePerPax() {
-      const entertainment = this.calculateTotal('entertainment');
-      const hostel = this.calculateHostelTotal();
-      const food = this.calculateTotal('f&b');
-      const total = entertainment + hostel + food;
-      return Math.round(total / this.personCount);
-    },
-    
-    // 计算总费用
-    calculateGrandTotal() {
-      const entertainment = this.calculateTotal('entertainment');
-      const hostel = this.calculateHostelTotal();
-      const food = this.calculateTotal('f&b');
-      return entertainment + hostel + food;
-    },
-    
-    // 获取房间描述
-    getRoomDescription(short = false) {
-      if (short) {
-        if (this.personCount === 1) return 'Single Room';
-        const tripleCount = this.allocatedRooms.filter(r => r.type === 'triple').length;
-        const doubleCount = this.allocatedRooms.filter(r => r.type === 'double').length;
-        const singleCount = this.allocatedRooms.filter(r => r.type === 'single').length;
-        
-        const parts = [];
-        if (tripleCount > 0) parts.push(`${tripleCount} Triple`);
-        if (doubleCount > 0) parts.push(`${doubleCount} Double`);
-        if (singleCount > 0) parts.push(`${singleCount} Single`);
-        
-        return parts.join(', ') + ' Room(s)';
-      }
-      
-      const roomTypes = this.allocatedRooms.map(room => 
-        `${room.capacity} person${room.capacity > 1 ? 's' : ''} (${room.type})`
-      );
-      
-      if (roomTypes.length === 0) return 'No rooms allocated';
-      if (roomTypes.length === 1) return `1 x ${roomTypes[0]} room`;
-      
-      return roomTypes.map((type, index) => 
-        `${index + 1}. ${type} room`
-      ).join('<br>');
+    selectAttraction(attraction) {
+      this.selectedAttraction = attraction
     },
 
+    increaseCount() {
+      if (this.personCount < 50) this.personCount++
+    },
+
+    decreaseCount() {
+      if (this.personCount > 1) this.personCount--
+    },
+
+    validateCount() {
+      if (this.personCount < 1) this.personCount = 1
+      if (this.personCount > 50) this.personCount = 50
+    },
+
+    Booking(){
+      localStorage.setItem("entry_fee", this.selectedAttraction.price)
+      localStorage.setItem("total_cost", this.totalCost)
+      localStorage.setItem("attraction", this.selectedAttraction.name)
+      localStorage.setItem("number_visitors", this.personCount)
+    }
   },
+
   mounted() {
-    // 初始验证
-    this.validateCount();
+    this.validateCount()
   }
 }
 </script>
+
 
 <style scoped>
 .trip-calculator {
@@ -570,7 +466,6 @@ export default {
 }
 
 .breakdown-section {
-  margin: 40px 0;
   padding: 20px;
   background-color: #f8f9fa;
   border-radius: 10px;

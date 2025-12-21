@@ -29,6 +29,7 @@ import Perak from '../views/place/perak.vue'
 // Sabah 表单相关
 import Fsabah from '../views/place/form/fsabah.vue'
 import Csabah from '../views/place/form/count/csabah.vue'
+import admindashboard from '../views/adminDashboard/admindashboard.vue'
 
 const routes = [
   { path: '/', component: Web },
@@ -40,6 +41,7 @@ const routes = [
   { path: '/profile/me', component: ProfileAfterHome },
   { path: '/about', name: 'About', component: About },
   { path: '/states', name: 'States', component: States },
+  { path: '/dashboard', name: 'dasboard', component: admindashboard },
 
   // 各州路由
   { path: '/sabah', name: 'Sabah', component: Sabah },

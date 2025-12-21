@@ -18,6 +18,7 @@ app.use(express.urlencoded({ extended: true }))
 
 // 路由
 app.use("/api/auth", require("./routes/auth"))
+app.use("/api", require("./routes/admin"))
 
 // 测试数据库连接
 app.get("/api/test-db", async (req, res) => {
@@ -67,8 +68,8 @@ app.get("/", (req, res) => {
   })
 })
 
-// 404处理
-app.use("*", (req, res) => {
+// 404处理 - FIXED: Remove the "*" parameter
+app.use((req, res) => {
   res.status(404).json({
     success: false,
     message: `Route ${req.originalUrl} not found`
