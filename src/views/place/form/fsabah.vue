@@ -1,7 +1,7 @@
 <template>
   <div class="form-container">
     <div class="header">
-      <h1>INFOMATION FORM (SABAH)</h1>
+      <h1>INFOMATION FORM</h1>
     </div>
     
     <form @submit.prevent="submitForm" class="information-form">

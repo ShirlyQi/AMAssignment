@@ -31,6 +31,8 @@ import Fsabah from '../views/place/form/fsabah.vue'
 import Csabah from '../views/place/form/count/csabah.vue'
 import admindashboard from '../views/adminDashboard/admindashboard.vue'
 
+import cselangor from '../views/place/form/count/cselangor.vue'
+
 const routes = [
   { path: '/', component: Web },
   { path: '/login', component: Login },
@@ -61,6 +63,11 @@ const routes = [
   // Sabah 表单相关路由
   { path: '/fsabah', name: 'Fsabah', component: Fsabah },
   { path: '/csabah', name: 'Csabah', component: Csabah },
+
+  { path: '/cselangor', name: 'Cselangor', component: cselangor },
+
+
+
 ]
 
 const router = createRouter({

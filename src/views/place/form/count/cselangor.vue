@@ -1,7 +1,7 @@
 <template>
   <div class="trip-calculator">
     <div class="header">
-      <h1>TRIP TO SABAH</h1>
+      <h1>TRIP TO SELANGOR</h1>
     </div>
     
     <div class="calculator-container">
@@ -185,13 +185,15 @@
 </template>
 
 <script>
-import sabah1 from '../../../../assets/sabah1.jpeg'
-import sabah2 from '../../../../assets/sabah2.jpeg'
-import sabah3 from '../../../../assets/sabah3.jpeg'
-import sabah4 from '../../../../assets/sabah4.jpeg'
+import batuCaves from '../../../../assets/sabah1.jpeg'
+import firefly from '../../../../assets/sabah1.jpeg'
+import icity from '../../../../assets/sabah1.jpeg'
+import klangFood from '../../../../assets/sabah1.jpeg'
+import boardGame from '../../../../assets/sabah1.jpeg'
 
 export default {
-  name: 'TripCalculator',
+  name: 'TripCalculatorSelangor',
+
   data() {
     return {
       personCount: 1,
@@ -200,31 +202,53 @@ export default {
       attractions: [
         {
           id: 1,
-          name: 'Mount Kinabalu',
-          description: 'Highest peak and UNESCO natural site',
-          price: 50,
-          image: sabah1
+          name: 'Batu Caves Temple',
+          description: 'Famous Hindu temple site',
+          type: 'Cultural',
+          price: 0,
+          location: 'Selangor',
+          city: 'Batu Caves',
+          image: batuCaves
         },
         {
           id: 2,
-          name: 'Sepilok Orangutan Rehabilitation Centre',
-          description: 'Orangutan conservation and wildlife',
-          price: 60,
-          image: sabah2
+          name: 'Kuala Selangor Firefly Park',
+          description: 'Natural firefly river boat experience',
+          type: 'Natural',
+          price: 80,
+          location: 'Selangor',
+          city: 'Kuala Selangor',
+          image: firefly
         },
         {
           id: 3,
-          name: 'Sabah Cultural Village',
-          description: 'Cultural exhibits of indigenous peoples',
-          price: 15,
-          image: sabah3
+          name: 'i-City Theme Park',
+          description: 'Entertainment and digital lights park',
+          type: 'Entertainment',
+          price: 55,
+          location: 'Selangor',
+          city: 'Shah Alam',
+          image: icity
         },
         {
           id: 4,
-          name: 'Sabah Seafood & Local Dishes',
-          description: 'Fresh seafood specialty',
-          price: 10,
-          image: sabah4
+          name: 'Klang Local Cuisine',
+          description: 'Famous bak kut teh and more',
+          type: 'Food',
+          price: 15,
+          location: 'Selangor',
+          city: 'Klang',
+          image: klangFood
+        },
+        {
+          id: 5,
+          name: 'Deborded Game',
+          description: 'Board game entertainment',
+          type: 'Entertainment',
+          price: 15,
+          location: 'Selangor',
+          city: 'Klang',
+          image: boardGame
         }
       ]
     }
@@ -255,11 +279,12 @@ export default {
       if (this.personCount > 50) this.personCount = 50
     },
 
-    Booking(){
-      localStorage.setItem("entry_fee", this.selectedAttraction.price)
-      localStorage.setItem("total_cost", this.totalCost)
-      localStorage.setItem("attraction", this.selectedAttraction.name)
-      localStorage.setItem("number_visitors", this.personCount)
+    Booking() {
+      localStorage.setItem('state', 'Selangor')
+      localStorage.setItem('attraction', this.selectedAttraction.name)
+      localStorage.setItem('entry_fee', this.selectedAttraction.price)
+      localStorage.setItem('number_visitors', this.personCount)
+      localStorage.setItem('total_cost', this.totalCost)
     }
   },
 
@@ -268,6 +293,7 @@ export default {
   }
 }
 </script>
+
 
 
 <style scoped>
