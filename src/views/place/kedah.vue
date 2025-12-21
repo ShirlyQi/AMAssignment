@@ -33,9 +33,9 @@ import kedahLangkawi from '/src/assets/kedah-langkawi.jpg'
     <img :src="kedahLangkawi" class="rounded-xl" />
 
     <div class="text-center">
-      <button class="mt-12 px-12 py-3 bg-[#9C6B4E] text-white rounded-full">
+      <router-link to="/ckedah"><button class="mt-12 px-12 py-3 bg-[#9C6B4E] text-white rounded-full">
         SUBMIT FORM
-      </button>
+      </button></router-link>
     </div>
   </section>
 

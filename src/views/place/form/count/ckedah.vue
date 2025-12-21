@@ -185,14 +185,13 @@
 </template>
 
 <script>
-import batuCaves from '../../../../assets/selangor1.jpg'
-import firefly from '../../../../assets/selangor2.png'
-import icity from '../../../../assets/selangor3.jpg'
-import klangFood from '../../../../assets/selangor4.jpg'
-import boardGame from '../../../../assets/selangor5.jpg'
+import kedah1 from '../../../../assets/kedah1.jpg'
+import kedah2 from '../../../../assets/kedah2.jpg'
+import kedah3 from '../../../../assets/kedah3.jpg'
+import kedah4 from '../../../../assets/kedah4.jpg'
 
 export default {
-  name: 'TripCalculatorSelangor',
+  name: 'TripCalculatorKedah',
 
   data() {
     return {
@@ -202,53 +201,39 @@ export default {
       attractions: [
         {
           id: 1,
-          name: 'Batu Caves Temple',
-          description: 'Famous Hindu temple site',
+          name: 'Balai Seni Negara',
+          description: 'National art gallery in Langkawi',
           type: 'Cultural',
-          price: 0,
-          location: 'Selangor',
-          city: 'Batu Caves',
-          image: batuCaves
+          city: 'Langkawi',
+          price: 15,
+          image: kedah1
         },
         {
           id: 2,
-          name: 'Kuala Selangor Firefly Park',
-          description: 'Natural firefly river boat experience',
+          name: 'Temurun Waterfall',
+          description: 'Scenic waterfall in Langkawi',
           type: 'Natural',
-          price: 80,
-          location: 'Selangor',
-          city: 'Kuala Selangor',
-          image: firefly
+          city: 'Langkawi',
+          price: 5,
+          image: kedah2
         },
         {
           id: 3,
-          name: 'i-City Theme Park',
-          description: 'Entertainment and digital lights park',
+          name: 'Langkawi SkyCab & SkyBridge',
+          description: 'Famous cable car and sky bridge',
           type: 'Entertainment',
-          price: 55,
-          location: 'Selangor',
-          city: 'Shah Alam',
-          image: icity
+          city: 'Langkawi',
+          price: 90,
+          image: kedah3
         },
         {
           id: 4,
-          name: 'Klang Local Cuisine',
-          description: 'Famous bak kut teh and more',
+          name: 'Langkawi Local Food Tour',
+          description: 'Explore local cuisine',
           type: 'Food',
-          price: 15,
-          location: 'Selangor',
-          city: 'Klang',
-          image: klangFood
-        },
-        {
-          id: 5,
-          name: 'Deborded Game',
-          description: 'Board game entertainment',
-          type: 'Entertainment',
-          price: 15,
-          location: 'Selangor',
-          city: 'Klang',
-          image: boardGame
+          city: 'Langkawi',
+          price: 10,
+          image: kedah4
         }
       ]
     }
@@ -274,25 +259,17 @@ export default {
       if (this.personCount > 1) this.personCount--
     },
 
-    validateCount() {
-      if (this.personCount < 1) this.personCount = 1
-      if (this.personCount > 50) this.personCount = 50
-    },
-
     Booking() {
-      localStorage.setItem('state', 'Selangor')
+      localStorage.setItem('state', 'Kedah')
       localStorage.setItem('attraction', this.selectedAttraction.name)
       localStorage.setItem('entry_fee', this.selectedAttraction.price)
       localStorage.setItem('number_visitors', this.personCount)
       localStorage.setItem('total_cost', this.totalCost)
     }
-  },
-
-  mounted() {
-    this.validateCount()
   }
 }
 </script>
+
 
 
 

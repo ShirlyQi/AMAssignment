@@ -1,7 +1,7 @@
 <template>
   <div class="trip-calculator">
     <div class="header">
-      <h1>TRIP TO SELANGOR</h1>
+      <h1>TRIP TO JOHOR</h1>
     </div>
     
     <div class="calculator-container">
@@ -185,14 +185,13 @@
 </template>
 
 <script>
-import batuCaves from '../../../../assets/selangor1.jpg'
-import firefly from '../../../../assets/selangor2.png'
-import icity from '../../../../assets/selangor3.jpg'
-import klangFood from '../../../../assets/selangor4.jpg'
-import boardGame from '../../../../assets/selangor5.jpg'
+import chineseTemple from '../../../../assets/johor1.jpg'
+import desaruBeach from '../../../../assets/johor2.jpg'
+import legoland from '../../../../assets/johor3.jpg'
+import kluangCoffee from '../../../../assets/johor4.jpg'
 
 export default {
-  name: 'TripCalculatorSelangor',
+  name: 'TripCalculatorJohor',
 
   data() {
     return {
@@ -202,53 +201,43 @@ export default {
       attractions: [
         {
           id: 1,
-          name: 'Batu Caves Temple',
-          description: 'Famous Hindu temple site',
+          name: 'Johor Bahru Old Chinese Temple',
+          description: 'Historic temple in Johor Bahru',
           type: 'Cultural',
-          price: 0,
-          location: 'Selangor',
-          city: 'Batu Caves',
-          image: batuCaves
+          price: 5,
+          location: 'Johor',
+          city: 'Johor Bahru',
+          image: chineseTemple
         },
         {
           id: 2,
-          name: 'Kuala Selangor Firefly Park',
-          description: 'Natural firefly river boat experience',
+          name: 'Desaru Beach',
+          description: 'Popular beach destination',
           type: 'Natural',
-          price: 80,
-          location: 'Selangor',
-          city: 'Kuala Selangor',
-          image: firefly
+          price: 100,
+          location: 'Johor',
+          city: 'Desaru',
+          image: desaruBeach
         },
         {
           id: 3,
-          name: 'i-City Theme Park',
-          description: 'Entertainment and digital lights park',
+          name: 'LEGOLAND Malaysia Resort',
+          description: 'Family theme park',
           type: 'Entertainment',
-          price: 55,
-          location: 'Selangor',
-          city: 'Shah Alam',
-          image: icity
+          price: 200,
+          location: 'Johor',
+          city: 'Iskandar Puteri',
+          image: legoland
         },
         {
           id: 4,
-          name: 'Klang Local Cuisine',
-          description: 'Famous bak kut teh and more',
+          name: 'Kluang Rail Coffee',
+          description: 'Local coffee and snacks',
           type: 'Food',
-          price: 15,
-          location: 'Selangor',
-          city: 'Klang',
-          image: klangFood
-        },
-        {
-          id: 5,
-          name: 'Deborded Game',
-          description: 'Board game entertainment',
-          type: 'Entertainment',
-          price: 15,
-          location: 'Selangor',
-          city: 'Klang',
-          image: boardGame
+          price: 14,
+          location: 'Johor',
+          city: 'Kluang',
+          image: kluangCoffee
         }
       ]
     }
@@ -280,7 +269,7 @@ export default {
     },
 
     Booking() {
-      localStorage.setItem('state', 'Selangor')
+      localStorage.setItem('state', 'Johor')
       localStorage.setItem('attraction', this.selectedAttraction.name)
       localStorage.setItem('entry_fee', this.selectedAttraction.price)
       localStorage.setItem('number_visitors', this.personCount)

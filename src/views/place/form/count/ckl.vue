@@ -185,11 +185,11 @@
 </template>
 
 <script>
-import batuCaves from '../../../../assets/selangor1.jpg'
-import firefly from '../../../../assets/selangor2.png'
-import icity from '../../../../assets/selangor3.jpg'
-import klangFood from '../../../../assets/selangor4.jpg'
-import boardGame from '../../../../assets/selangor5.jpg'
+import batuCaves from '../../../../assets/sabah1.jpeg'
+import firefly from '../../../../assets/sabah1.jpeg'
+import icity from '../../../../assets/sabah1.jpeg'
+import klangFood from '../../../../assets/sabah1.jpeg'
+import boardGame from '../../../../assets/sabah1.jpeg'
 
 export default {
   name: 'TripCalculatorSelangor',

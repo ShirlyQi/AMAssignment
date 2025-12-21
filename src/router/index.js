@@ -30,8 +30,18 @@ import Perak from '../views/place/perak.vue'
 import Fsabah from '../views/place/form/fsabah.vue'
 import Csabah from '../views/place/form/count/csabah.vue'
 import admindashboard from '../views/adminDashboard/admindashboard.vue'
-
 import cselangor from '../views/place/form/count/cselangor.vue'
+import cjohor from '../views/place/form/count/cjohor.vue'
+import ckedah from '../views/place/form/count/ckedah.vue'
+import ckelantan from '../views/place/form/count/ckelantan.vue'
+import ckl from '../views/place/form/count/ckl.vue'
+import cmelaka from '../views/place/form/count/cmelaka.vue'
+import cn9 from '../views/place/form/count/cn9.vue'
+import cpenang from '../views/place/form/count/cpenang.vue'
+import cperak from '../views/place/form/count/cperak.vue'
+import cperlis from '../views/place/form/count/cperlis.vue'
+import csarawak from '../views/place/form/count/csarawak.vue'
+import cterengganu from '../views/place/form/count/cterengganu.vue'
 
 const routes = [
   { path: '/', component: Web },
@@ -65,8 +75,17 @@ const routes = [
   { path: '/csabah', name: 'Csabah', component: Csabah },
 
   { path: '/cselangor', name: 'Cselangor', component: cselangor },
-
-
+  { path: '/ckedah', name: 'Ckedah', component: ckedah },
+  { path: '/ckelantan', name: 'Ckelantan', component: ckelantan },
+  { path: '/ckl', name: 'Ckl', component: ckl },
+  { path: '/cmelaka', name: 'Cmelaka', component: cmelaka },
+  { path: '/cn9', name: 'Cn9', component: cn9 },
+  { path: '/cpenang', name: 'Cpenang', component: cpenang },
+  { path: '/cperak', name: 'Cperak', component: cperak },
+  { path: '/cperlis', name: 'Cperlis', component: cperlis },
+  { path: '/csarawak', name: 'Csarawak', component: csarawak },
+  { path: '/cterengganu', name: 'Cterengganu', component: cterengganu },
+  { path: '/cjohor', name: 'Cjohor', component: cjohor },
 
 ]
 

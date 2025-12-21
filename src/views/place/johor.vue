@@ -30,9 +30,9 @@ import johorCoast from '/src/assets/johor-coast.jpeg'
       <img :src="johorCoast" class="rounded-xl mb-10" />
 
       <div class="text-center">
-        <button class="px-12 py-3 bg-[#9C6B4E] text-white rounded-full">
+        <router-link to="/cjohor"><button class="px-12 py-3 bg-[#9C6B4E] text-white rounded-full">
           SUBMIT FORM
-        </button>
+        </button></router-link>
       </div>
     </div>
   </section>
