@@ -188,4 +188,48 @@ router.delete("/reports/:id", asyncHandler(async (req, res) => {
   res.json({ success: true })
 }))
 
+
+router.post("/assign-employee", async (req, res) => {
+  const { attractionName } = req.body
+
+  if (!attractionName) {
+    return res.status(400).json({ message: "Attraction name is required" })
+  }
+
+  try {
+    // 1️⃣ Find attraction location
+    const [attractions] = await db.query(
+      `SELECT name, location FROM Attraction WHERE name = ?`,
+      [attractionName]
+    )
+
+    if (attractions.length === 0) {
+      return res.status(404).json({ message: "Attraction not found" })
+    }
+
+    const attraction = attractions[0]
+    const location = attraction.location
+
+    // 2️⃣ Find employee responsible for that location
+    const [employees] = await db.query(
+      `
+      SELECT name, email, phone, location
+      FROM Employee
+      WHERE FIND_IN_SET(?, location)
+      `,
+      [location]
+    )
+
+    return res.json({
+      attraction: attraction.name,
+      location,
+      employees
+    })
+
+  } catch (error) {
+    console.error(error)
+    res.status(500).json({ message: "Server error" })
+  }
+})
+
 module.exports = router

@@ -130,10 +130,6 @@ export default {
              now.getMinutes().toString().padStart(2, '0');
     },
     
-    getRandomEmployee() {
-      const randomIndex = Math.floor(Math.random() * this.employees.length);
-      return this.employees[randomIndex];
-    },
     
     async submitForm() {
       // 保存提交的数据
@@ -141,8 +137,22 @@ export default {
       this.formData.attraction = localStorage.getItem("attraction")
       this.formData.entry_fee = localStorage.getItem("entry_fee")
       this.formData.total_cost = localStorage.getItem("total_cost")
-      // sabah is 
-      this.formData.employee = "Wei Qi"
+
+      try {
+        const response = await axios.post(
+          "http://localhost:5000/api/assign-employee",
+          {
+            attractionName: this.formData.attraction
+          }
+        )
+
+        this.formData.employee = response.data.employees[0].name
+        console.log("Assigned employee:", this.formData.employee)
+
+      } catch (error) {
+        console.error("Error assigning employee:", error.response?.data || error.message)
+      }
+
       this.submittedData = { ...this.formData };
 
       // 在实际应用中，这里可以发送数据到服务器
@@ -160,14 +170,6 @@ export default {
       this.showConfirmation = true;
       }
 
-
-
-
-      
-      
-      
-      
-      
       // 重置表单
       this.formData = {
         member: '',
