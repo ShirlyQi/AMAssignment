@@ -19,14 +19,23 @@ function login() {
     return
   }
 
-  // 登录成功 → 直接进入 Home
-  router.push('/home')
+ 
+  const validEmail = 'qi@gmail.com'
+  const validPassword = '1234567'
+
+  if (email.value.trim() === validEmail && password.value === validPassword) {
+   
+    router.push('/home')
+  } else {
+    error.value = 'Invalid email or password'
+  }
 }
 </script>
 
 <template>
-  <!-- 保留你原本的 Login UI -->
+  
   <div class="h-screen flex items-center justify-center relative">
+   
     <div
       class="absolute inset-0 bg-cover bg-center filter blur-sm"
       :style="{ backgroundImage: `url(${kltower})` }"
@@ -35,6 +44,7 @@ function login() {
     <div class="relative w-96 bg-white p-8 rounded shadow-lg">
       <img :src="logo" class="w-60 mx-auto mb-6" />
       <h2 class="text-2xl font-bold text-center mb-6">Login</h2>
+
 
       <p v-if="error" class="text-red-600 text-sm mb-4 text-center">{{ error }}</p>
 
@@ -46,6 +56,7 @@ function login() {
           <EyeOff v-else :size="20" />
         </button>
       </div>
+
 
       <div class="flex justify-between mb-6 text-sm">
         <router-link to="/signup" class="text-blue-600 hover:underline">New user?</router-link>
