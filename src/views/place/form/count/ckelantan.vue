@@ -1,7 +1,7 @@
 <template>
   <div class="trip-calculator">
     <div class="header">
-      <h1>TRIP TO SELANGOR</h1>
+      <h1>TRIP TO KELANTAN</h1>
     </div>
     
     <div class="calculator-container">
@@ -185,14 +185,12 @@
 </template>
 
 <script>
-import batuCaves from '../../../../assets/sabah1.jpeg'
-import firefly from '../../../../assets/sabah1.jpeg'
-import icity from '../../../../assets/sabah1.jpeg'
-import klangFood from '../../../../assets/sabah1.jpeg'
-import boardGame from '../../../../assets/sabah1.jpeg'
+import kelantan1 from '../../../../assets/kelantan1.jpg'
+import kelantan2 from '../../../../assets/kelantan2.jpg'
+import kelantan3 from '../../../../assets/kelantan3.jpg'
 
 export default {
-  name: 'TripCalculatorSelangor',
+  name: 'TripCalculatorKelantan',
 
   data() {
     return {
@@ -202,53 +200,24 @@ export default {
       attractions: [
         {
           id: 1,
-          name: 'Batu Caves Temple',
-          description: 'Famous Hindu temple site',
-          type: 'Cultural',
-          price: 0,
-          location: 'Selangor',
-          city: 'Batu Caves',
-          image: batuCaves
+          name: 'Istana Jahar',
+          description: 'Traditional royal palace in Kelantan (Cultural)',
+          price: 10,
+          image: kelantan1
         },
         {
           id: 2,
-          name: 'Kuala Selangor Firefly Park',
-          description: 'Natural firefly river boat experience',
-          type: 'Natural',
-          price: 80,
-          location: 'Selangor',
-          city: 'Kuala Selangor',
-          image: firefly
+          name: 'Taman Negara National Park',
+          description: 'Protected natural park area (Gua Musang)',
+          price: 20,
+          image: kelantan2
         },
         {
           id: 3,
-          name: 'i-City Theme Park',
-          description: 'Entertainment and digital lights park',
-          type: 'Entertainment',
-          price: 55,
-          location: 'Selangor',
-          city: 'Shah Alam',
-          image: icity
-        },
-        {
-          id: 4,
-          name: 'Klang Local Cuisine',
-          description: 'Famous bak kut teh and more',
-          type: 'Food',
-          price: 15,
-          location: 'Selangor',
-          city: 'Klang',
-          image: klangFood
-        },
-        {
-          id: 5,
-          name: 'Deborded Game',
-          description: 'Board game entertainment',
-          type: 'Entertainment',
-          price: 15,
-          location: 'Selangor',
-          city: 'Klang',
-          image: boardGame
+          name: 'Kelantan Local Food',
+          description: 'Traditional dishes like nasi kerabu',
+          price: 10,
+          image: kelantan3
         }
       ]
     }
@@ -280,11 +249,11 @@ export default {
     },
 
     Booking() {
-      localStorage.setItem('state', 'Selangor')
-      localStorage.setItem('attraction', this.selectedAttraction.name)
+      localStorage.setItem('state', 'Kelantan')
       localStorage.setItem('entry_fee', this.selectedAttraction.price)
-      localStorage.setItem('number_visitors', this.personCount)
       localStorage.setItem('total_cost', this.totalCost)
+      localStorage.setItem('attraction', this.selectedAttraction.name)
+      localStorage.setItem('number_visitors', this.personCount)
     }
   },
 
@@ -293,6 +262,7 @@ export default {
   }
 }
 </script>
+
 
 
 
